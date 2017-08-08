@@ -1,0 +1,20 @@
+{
+  "name": "albion-helper",
+  "version": "1.0.0",
+  "description": "A helper tool for Albion Online players",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com"
+  },
+  "keywords": [
+    "Albion",
+    "Online",
+    "MMORPG"
+  ],
+  "author": "John G",
+  "license": "ISC"
+}
