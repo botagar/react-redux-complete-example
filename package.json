@@ -4,11 +4,13 @@
   "description": "A helper tool for Albion Online players",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "build": "webpack",
+    "serve": "webpack-dev-server --hot"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com"
+    "url": "https://github.com/"
   },
   "keywords": [
     "Albion",
@@ -22,7 +24,16 @@
     "babel-loader": "^7.1.1",
     "babel-preset-es2016": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "file-loader": "^0.11.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-hot-loader": "3.0.0-beta.7",
     "webpack": "^3.5.0",
     "webpack-dev-server": "^2.6.1"
+  },
+  "devDependencies": {
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   }
 }
