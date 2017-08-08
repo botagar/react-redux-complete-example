@@ -6,11 +6,11 @@
   "scripts": {
     "test": "test",
     "build": "webpack",
-    "serve": "webpack-dev-server --hot"
+    "serve": "webpack-dev-server --hot --inline --content-base ./src --open"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/"
+    "url": "https://github.com/botagar/albion-helper"
   },
   "keywords": [
     "Albion",
