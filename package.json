@@ -16,5 +16,13 @@
     "MMORPG"
   ],
   "author": "John G",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^3.5.0",
+    "webpack-dev-server": "^2.6.1"
+  }
 }
