@@ -7,7 +7,7 @@ var DIST = path.resolve(__dirname, 'dist')
 var config = {
   entry: [
     'react-hot-loader/patch',
-    './src/App.jsx'
+    './src/main.js'
   ],
 
   output: {
