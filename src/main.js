@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import RoutedApp from './common/routes.jsx';
+import RoutedApp from './common/routedApp.jsx';
 import Home from './home/home.component.jsx';
 import About from './about/about.component.jsx';
 
