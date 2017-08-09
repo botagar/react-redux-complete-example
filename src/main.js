@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import App from './App.jsx';
+import RoutedApp from './common/routes.jsx';
+import Home from './home/home.component.jsx';
+import About from './about/about.component.jsx';
 
 require('./index.html');
 
@@ -9,18 +11,19 @@ const appContainer = document.getElementById('app');
 
 ReactDOM.render(
     <AppContainer>
-        <App />
+        <RoutedApp />
     </AppContainer>,
     appContainer
 )
 
 if (module.hot) {
-    module.hot.accept('./App.jsx', () => {
+    module.hot.accept('./home/home.component.jsx', () => {
         ReactDOM.render(
             <AppContainer>
-                <App />
+                <RoutedApp />
             </AppContainer>,
             appContainer
         )
     })
 }
+
