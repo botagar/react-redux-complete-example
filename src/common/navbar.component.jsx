@@ -36,9 +36,9 @@ const NavLinkStyle = {
 
 const NavBar = (props) =>
   <div className='nav' style={NavBarStyle}>
-     <NavLink to={'/'} style={NavLogoStyle}>
+    <NavLink to={'/'} style={NavLogoStyle}>
       <img 
-        src='https://s-media-cache-ak0.pinimg.com/originals/52/f2/32/52f2321a110fc6588f555d91d04f9c5c.jpg'
+        src='https://dhost1.mmomiss.com/uploads/201705/albion-logistik.png'
         style={NavImgStyle}
         alt='Logo'/>
     </NavLink> 

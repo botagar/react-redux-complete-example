@@ -4,7 +4,7 @@
   "description": "A helper tool for Albion Online players",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register src/**/**.spec.js",
+    "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register src/**/**.spec.js",
     "build": "webpack",
     "serve": "webpack-dev-server --hot --inline --progress --colors --watch --content-base ./src --open",
     "lint": "standard src/**/** test/**/**",
@@ -31,6 +31,7 @@
     "file-loader": "^0.11.2",
     "jsdom": "^11.1.0",
     "mocha": "^3.5.0",
+    "nyc": "^11.1.0",
     "react": "^15.6.1",
     "react-addons-test-utils": "^15.6.0",
     "react-dom": "^15.6.1",
