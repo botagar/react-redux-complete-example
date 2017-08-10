@@ -8,14 +8,15 @@ const NavBarStyle = {
 
 const NavLogoStyle = {
   display: 'inline-block',
-  height: '42px',
-  width: '42px',
+  height: '100px',
+  width: '100px',
   cursor: 'pointer'
 }
 
-const NavLogoImgStyle = {
-  'max-width': '100%',
-  'max-height': '100%'
+const NavImgStyle = {
+  maxWidth: '100%',
+  maxHeight: '100%',
+  position: 'relative'
 }
 
 const NavLinkContainerStyle = {
@@ -24,12 +25,18 @@ const NavLinkContainerStyle = {
 
 const NavLinkStyle = {
   border: '1px solid green',
-  'list-style-type': 'none',
-  display: 'inline-block'
+  listStyleType: 'none',
+  display: 'inline-block',
+  position: 'relative',
+  margin: '0 20px 0 0',
+  width: '10vw',
+  height: '5vh'
 }
 
-const home = () => {
-
+const NavLinkTextStyle = {
+  position: 'absolute',
+  top: '10px',
+  'WebkitTextStroke': '1px white'
 }
 
 const NavBar = (props) =>
@@ -37,13 +44,23 @@ const NavBar = (props) =>
     <NavLink to={'/'} style={NavLogoStyle}>
       <img 
         src='https://s-media-cache-ak0.pinimg.com/originals/52/f2/32/52f2321a110fc6588f555d91d04f9c5c.jpg'
-        style = {NavLogoImgStyle}
+        style={NavImgStyle}
         alt='Logo'/>
+      <h2 style={NavLinkTextStyle}>""</h2>
     </NavLink>
+
     <ul className='nav-links' style={NavLinkContainerStyle}>
       {
         _.map(props.navLinks, (navLinkInfo) => {
-          return <li key={navLinkInfo.name} style={NavLinkStyle}><NavLink to={navLinkInfo.URI} activeClassName='active'>{navLinkInfo.name}</NavLink></li>
+          return <li key={navLinkInfo.name} style={NavLinkStyle}>
+              <NavLink to={navLinkInfo.URI} activeClassName='active'>
+                <img 
+                  src={navLinkInfo.image}
+                  style={NavImgStyle}
+                  alt='Logo'/>
+                <h2 style={NavLinkTextStyle}>{navLinkInfo.name}</h2>
+              </NavLink>
+            </li>
         })
       }
     </ul>
