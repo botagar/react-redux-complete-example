@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import _ from 'underscore'
+import NavigationLink from './navbarLink.component.jsx'
 
 const NavBarStyle = {
   border: '1px solid red'
@@ -33,33 +34,24 @@ const NavLinkStyle = {
   height: '5vh'
 }
 
-const NavLinkTextStyle = {
-  position: 'absolute',
-  top: '10px',
-  'WebkitTextStroke': '1px white'
-}
-
 const NavBar = (props) =>
   <div className='nav' style={NavBarStyle}>
-    <NavLink to={'/'} style={NavLogoStyle}>
+     <NavLink to={'/'} style={NavLogoStyle}>
       <img 
         src='https://s-media-cache-ak0.pinimg.com/originals/52/f2/32/52f2321a110fc6588f555d91d04f9c5c.jpg'
         style={NavImgStyle}
         alt='Logo'/>
-      <h2 style={NavLinkTextStyle}>""</h2>
-    </NavLink>
+    </NavLink> 
 
     <ul className='nav-links' style={NavLinkContainerStyle}>
       {
         _.map(props.navLinks, (navLinkInfo) => {
           return <li key={navLinkInfo.name} style={NavLinkStyle}>
-              <NavLink to={navLinkInfo.URI} activeClassName='active'>
-                <img 
-                  src={navLinkInfo.image}
-                  style={NavImgStyle}
-                  alt='Logo'/>
-                <h2 style={NavLinkTextStyle}>{navLinkInfo.name}</h2>
-              </NavLink>
+             <NavigationLink 
+              uri={navLinkInfo.URI} 
+              image={navLinkInfo.image} 
+              displayText={navLinkInfo.name} 
+              altText={"placeholder alt text"}/>
             </li>
         })
       }

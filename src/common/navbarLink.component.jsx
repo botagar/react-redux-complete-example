@@ -13,14 +13,14 @@ const NavImgStyle = {
   position: 'relative'
 }
 
-const NavigationLink = (props) => {
-  <NavLink to={props.URI} activeClassName='active'>
+const NavigationLink = (props) =>
+  <NavLink to={props.uri} activeClassName='active'>
     <img 
       src={props.image}
       style={NavImgStyle}
-      alt='Logo'/>
-    <h2 style={NavLinkTextStyle}>{props.name}</h2>
+      alt={props.altText}/>
+    <h2 style={NavLinkTextStyle}>{props.displayText}</h2>
   </NavLink>
-}
+
 
 export default NavigationLink
