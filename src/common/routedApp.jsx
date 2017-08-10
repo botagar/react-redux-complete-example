@@ -11,7 +11,7 @@ const RoutedApp = () =>
       <NavBar navLinks={NavConfig} />
 
       <Switch>
-        <Route path='/' component={Home} exact={true} />
+        <Route path='/' component={Home} exact />
         <Route path='/about' component={About} />
       </Switch>
     </div>

@@ -15,12 +15,11 @@ const NavImgStyle = {
 
 const NavigationLink = (props) =>
   <NavLink to={props.uri} activeClassName='active'>
-    <img 
+    <img
       src={props.image}
       style={NavImgStyle}
-      alt={props.altText}/>
+      alt={props.altText} />
     <h2 style={NavLinkTextStyle}>{props.displayText}</h2>
   </NavLink>
-
 
 export default NavigationLink

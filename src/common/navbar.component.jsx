@@ -37,22 +37,22 @@ const NavLinkStyle = {
 const NavBar = (props) =>
   <div className='nav' style={NavBarStyle}>
     <NavLink to={'/'} style={NavLogoStyle}>
-      <img 
+      <img
         src='https://dhost1.mmomiss.com/uploads/201705/albion-logistik.png'
         style={NavImgStyle}
-        alt='Logo'/>
-    </NavLink> 
+        alt='Logo' />
+    </NavLink>
 
     <ul className='nav-links' style={NavLinkContainerStyle}>
       {
         _.map(props.navLinks, (navLinkInfo) => {
           return <li key={navLinkInfo.name} style={NavLinkStyle}>
-             <NavigationLink 
-              uri={navLinkInfo.URI} 
-              image={navLinkInfo.image} 
-              displayText={navLinkInfo.name} 
-              altText={"placeholder alt text"}/>
-            </li>
+            <NavigationLink
+              uri={navLinkInfo.URI}
+              image={navLinkInfo.image}
+              displayText={navLinkInfo.name}
+              altText={'placeholder alt text'} />
+          </li>
         })
       }
     </ul>
