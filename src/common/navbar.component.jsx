@@ -34,7 +34,7 @@ const NavLinkStyle = {
   height: '5vh'
 }
 
-const NavBar = (props) =>
+const NavBar = ({ navLinks }) =>
   <div className='nav' style={NavBarStyle}>
     <NavLink to={'/'} style={NavLogoStyle}>
       <img
@@ -45,7 +45,7 @@ const NavBar = (props) =>
 
     <ul className='nav-links' style={NavLinkContainerStyle}>
       {
-        _.map(props.navLinks, (navLinkInfo) => {
+        _.map(navLinks, (navLinkInfo) => {
           return <li key={navLinkInfo.name} style={NavLinkStyle}>
             <NavigationLink
               uri={navLinkInfo.URI}
