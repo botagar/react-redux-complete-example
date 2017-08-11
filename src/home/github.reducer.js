@@ -1,12 +1,11 @@
 const github = (state=[], action) => {
     switch (action.type) {
         case 'ADD_REPOSITORY':
-            const updatedRepositories = state.repositories.concat({
-                id: action.repository.id,
-                name: action.repository.name
-            })
-            state.repositories = updatedRepositories;
-            return state;
+          state.repositories = [...state.repositories, {
+              id: action.repository.id,
+              name: action.repository.name
+          }]
+          return state
         default:
             return state
     }
