@@ -10,9 +10,9 @@ class Home extends React.Component {
     super(props)
   }
   
-  onClick = () => {
-    // Fetch repos
-  }
+  // onClick = () => {
+  //   // Fetch repos
+  // }
 
   // componentDidMount() {
   //   state.name = 'John'

@@ -13,25 +13,23 @@ require('./index.html');
 
 const appContainer = document.getElementById('app');
 
-ReactDOM.render(
-    <AppContainer>
-        <Provider store={store}>
-            <RoutedApp />
-        </Provider>
-    </AppContainer>,
-    appContainer
-)
+const render = () => {
+    ReactDOM.render(
+        <AppContainer>
+            <Provider store={store}>
+                <RoutedApp />
+            </Provider>
+        </AppContainer>,
+        appContainer
+    )
+}
 
 if (module.hot) {
     module.hot.accept('./home/home.component.jsx', () => {
-        ReactDOM.render(
-            <AppContainer>
-                <Provider store={store}>
-                    <RoutedApp />
-                </Provider>
-            </AppContainer>,
-            appContainer
-        )
+        render()
     })
 }
 
+render()
+
+store.subscribe(render)

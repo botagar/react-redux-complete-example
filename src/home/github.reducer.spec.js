@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
+import deepFreeze from 'deepfreeze'
 
 import github from './github.reducer'
 
@@ -7,6 +8,8 @@ describe('Github.Reducer', function () {
   it('Should do nothing if invalid action', function () {
     let initialState = { repositories: [] }
     let repository = {id: 2, name: 'Test Repo 2'}
+
+    deepFreeze(initialState)
 
     let newState = github(initialState, { type: 'INVALID_ACTION', repository })
 
