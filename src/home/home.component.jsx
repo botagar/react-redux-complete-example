@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 // const Home = (props) =>
 //   <div>
@@ -22,10 +23,13 @@ class Home extends React.Component {
     return (
       <div>
          <h1>Welcome home {'John'}</h1> 
-         <button onClick={this.onClick}>Click Me</button>
+         {/* May shed insight: http://blog.isquaredsoftware.com/2016/10/idiomatic-redux-why-use-action-creators/ */}
+         <button onClick={null} >Click Me</button>
       </div>
     )
   }
 }
 
-export default Home
+export default connect()(Home)
+
+//onClick={this.props.dispatch({type:'ADD_REPOSITORY', repository: {id:1,name:'test'}})}
