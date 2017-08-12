@@ -34,5 +34,3 @@ if (module.hot) {
 render()
 
 store.subscribe(render)
-
-console.log(store.getState())

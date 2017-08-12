@@ -1,6 +1,5 @@
 import React from 'react'
-import { loadReposForUser } from './github.action'
-import GithubRepo from './github.component.jsx'
+import GithubRepo from '../github/github.component.jsx'
 
 const Home = (props) =>
   <div>
