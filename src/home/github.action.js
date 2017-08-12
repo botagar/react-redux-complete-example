@@ -1,24 +1,35 @@
-export const ADD_REPOSITORY = 'ADD_REPOSITORY'
-export const ADD_REPOSITORIES = 'ADD_REPOSITORIES'
-export const SEARCH_REPOSITORIES = 'SEARCH_REPOSITORIES'
+import *  as types from './github.actionTypes'
+import GithubApi from './github.api'
 
 export const addRepository = repository => {
     return {
-        type: ADD_REPOSITORY,
+        type: types.ADD_REPOSITORY,
         repository
     }
 }
 
 export const addRepositories = repositories => {
     return {
-        type: ADD_REPOSITORIES,
+        type: types.ADD_REPOSITORIES,
         repositories
     }
 }
 
 export const searchRepositories = username => {
     return {
-        type: SEARCH_REPOSITORIES,
+        type: types.SEARCH_REPOSITORIES,
         username
+    }
+}
+
+export function loadReposForUser(username) {
+    return function(dispatch) {
+        return GithubApi.getAllPublicRepositoriesForUser(username)
+            .then(repos => {
+                dispatch(addRepositories(repos))
+            })
+            .catch(err => {
+                throw(err)
+            })
     }
 }

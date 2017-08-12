@@ -1,18 +1,20 @@
-import { ADD_REPOSITORY, ADD_REPOSITORIES, SEARCH_REPOSITORIES } from './github.action'
+import *  as types from './github.actionTypes'
+import { loadReposForUser } from './github.action'
 
 const github = (state=[], action) => {
     switch (action.type) {
-        case ADD_REPOSITORY:
+        case types.ADD_REPOSITORY:
           state.repositories = [...state.repositories, {
               id: action.repository.id,
               name: action.repository.name
           }]
           return state
-        case ADD_REPOSITORIES:
+        case types.ADD_REPOSITORIES:
           console.log('Add Repositories called')
-          return state
-        case SEARCH_REPOSITORIES:
-          console.log('Search Repositories called')
+          return action.repositories
+        case types.SEARCH_REPOSITORIES:
+          console.log(`Search Repositories called with user ${action.username}`)
+          
           return state
         default:
             return state
