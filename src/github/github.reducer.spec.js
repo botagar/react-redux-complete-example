@@ -2,6 +2,7 @@ import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import deepFreeze from 'deepfreeze'
 
+import *  as types from './github.actionTypes'
 import github from './github.reducer'
 
 describe('Github.Reducer', function () {
@@ -16,13 +17,19 @@ describe('Github.Reducer', function () {
     expect(newState).to.eql(initialState)
   })
 
-  it('Should add a repository to the repositories list', function () {
+  it('Should set state repositories to the new repositories list', function () {
     let initialState = { repositories: [{id: 1, name: 'Test Repo'}] }
-    let repository = {id: 2, name: 'Test Repo 2'}
+    let newRepositories = [
+      {id: 2, name: 'Test Repo 2'},
+      {id: 3, name: 'Test Repo 3'},
+      {id: 4, name: 'Test Repo 4'}
+    ]
 
-    let newState = github(initialState, { type: 'ADD_REPOSITORY', repository })
+    deepFreeze(initialState)
 
-    expect(newState.repositories.length).to.eql(2)
-    expect(newState.repositories[1]).to.eql(repository)
+    let newState = github(initialState, { type: types.SET_REPOSITORIES, repositories: newRepositories })
+
+    expect(newState.repositories.length).to.eql(3)
+    expect(newState.repositories).to.eql(newRepositories)
   })
 })
