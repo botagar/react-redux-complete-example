@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import { loadReposForUser } from './github.action'
+import GithubRepoList from './githubRepoList.component.jsx'
 
 const Home = (props) =>
   <div>
@@ -11,22 +12,16 @@ const Home = (props) =>
     </form>
     {console.log('repos...')}
     {console.log(props.repos)}
-    <ul>
-      {props.repos.map(repo => {
-        {console.log('--> repo')}
-        {console.log(repo)}
-        <li key={repo.id}>{repo.name}</li>
-      })}
-    </ul>
+    <GithubRepoList repos={props.repos} />
   </div>
 
 Home.propTypes = {
-  //repos: PropTypes.array.isRequired
+  repos: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    repos: state.Github
+    repos: state.Github.repositories
   }
 }
 

@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
+import initialState from './common/initialState'
 import configureStore from './redux/configureStore'
 import RoutedApp from './common/routedApp.jsx';
 import Home from './home/home.component.jsx';
 import About from './about/about.component.jsx';
 
-const store = configureStore();
+const store = configureStore(initialState);
 
 require('./index.html');
 

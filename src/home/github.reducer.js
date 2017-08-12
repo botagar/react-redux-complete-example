@@ -12,7 +12,12 @@ const github = (state=initialState.Github, action) => {
           return state
         case types.ADD_REPOSITORIES:
           console.log('Add Repositories called')
-          return action.repositories
+
+          var newState = Object.assign({}, state, {
+            repositories: action.repositories
+          })
+
+          return newState
         case types.SEARCH_REPOSITORIES:
           console.log(`Search Repositories called with user ${action.username}`)
           

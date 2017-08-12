@@ -1,3 +1,5 @@
 export default {  
-  Github: []
+  Github: {
+    repositories: []
+  }
 }
