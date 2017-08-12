@@ -4,7 +4,7 @@
   "description": "A helper tool for Albion Online players",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register src/**/**.spec.js",
+    "test": "nyc mocha --compilers js:babel-core/register src/**/**.spec.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "webpack",
     "serve": "webpack-dev-server --hot --inline --progress --colors --watch --content-base ./src --open",
@@ -59,6 +59,30 @@
     "presets": [
       "es2016",
       "react"
+    ]
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "cache": true,
+    "all": true,
+    "lines": 0,
+    "statements": 0,
+    "functions": 0,
+    "branches": 0,
+    "exclude": [
+      "**/*.spec.js",
+      "dist"
+    ],
+    "include": [
+      "src/**/*.js",
+      "src/**/*.jsx"
+    ],
+    "reporter": [
+      "lcov",
+      "html",
+      "text",
+      "text-summary"
     ]
   }
 }
