@@ -1,7 +1,8 @@
+import initialState from '../common/initialState'
 import *  as types from './github.actionTypes'
 import { loadReposForUser } from './github.action'
 
-const github = (state=[], action) => {
+const github = (state=initialState.Github, action) => {
     switch (action.type) {
         case types.ADD_REPOSITORY:
           state.repositories = [...state.repositories, {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import { loadReposForUser } from './github.action'
 
@@ -9,15 +9,28 @@ const Home = (props) =>
       Github Username: <input type="text" name="username" />
       <button type='submit' >List Repositories</button>
     </form>
+    {console.log('repos...')}
+    {console.log(props.repos)}
+    <ul>
+      {props.repos.map(repo => {
+        {console.log('--> repo')}
+        {console.log(repo)}
+        <li key={repo.id}>{repo.name}</li>
+      })}
+    </ul>
   </div>
 
-const stateToPropsMapping = state => {
+Home.propTypes = {
+  //repos: PropTypes.array.isRequired
+};
+
+const mapStateToProps = state => {
   return {
-    state
+    repos: state.Github
   }
 }
 
-const dispatchToEventsMapping = dispatch => {
+const mapDispatchToEvents = dispatch => {
   return {
     onGithubUsernameSearchSubmit: (event) => {
       console.log(`searching for ${event.target.querySelector('input').value}`)
@@ -26,6 +39,6 @@ const dispatchToEventsMapping = dispatch => {
   }
 }
 
-export default connect(stateToPropsMapping, dispatchToEventsMapping)(Home)
+export default connect(mapStateToProps, mapDispatchToEvents)(Home)
 
 //onClick={this.props.dispatch({type:'ADD_REPOSITORY', repository: {id:1,name:'test'}})}
