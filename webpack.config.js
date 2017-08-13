@@ -27,6 +27,10 @@ var config = {
         loader: 'file-loader?name=[name].[ext]'
       },
       {
+        test: /\.css$/,
+        loader: 'file-loader?name=[name].[ext]'
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
