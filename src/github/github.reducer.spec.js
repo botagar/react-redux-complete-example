@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { describe, it } from 'mocha'
 import deepFreeze from 'deepfreeze'
 
-import *  as types from './github.actionTypes'
+import * as types from './github.actionTypes'
 import github from './github.reducer'
 
 describe('Github.Reducer', function () {

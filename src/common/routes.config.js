@@ -1,20 +1,18 @@
-import React from 'react'
-
 import Home from '../home/home.component.jsx'
 import About from '../about/about.component.jsx'
 
 module.exports = [
   {
-    'path':'/',
+    'path': '/',
     'component': Home,
     'exact': true
   },
   {
-    'path':'/about',
+    'path': '/about',
     'component': About
   },
   {
-    'path':'/market',
+    'path': '/market',
     'component': null
   }
 ]

@@ -1,19 +1,20 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadReposForUser } from './github.action'
 import GithubRepoList from './githubRepoList.component.jsx'
 
 const Github = (props) =>
   <div>
-    <form onSubmit={e => {e.preventDefault();props.onGithubUsernameSearchSubmit(e)}}>
-      Github Username: <input type="text" name="username" />
+    <form onSubmit={e => { e.preventDefault(); props.onGithubUsernameSearchSubmit(e) }}>
+      Github Username: <input type='text' name='username' />
       <button type='submit' >List Repositories</button>
     </form>
     <GithubRepoList repos={props.repos} />
   </div>
 
-Github.propTypes = {};
+Github.PropTypes = {
+  // Import Proptypes to start asserting props (import PropTypes from 'prop-types')
+}
 
 const mapStateToProps = state => {
   return {

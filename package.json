@@ -8,8 +8,8 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "webpack",
     "serve": "webpack-dev-server --hot --inline --progress --colors --watch --content-base ./src --open",
-    "lint": "standard src/**/** test/**/**",
-    "lint-fix": "standard —-fix src/**/** test/**/**"
+    "lint": "standard src/**/**",
+    "lint-fix": "standard —-fix src/**/**"
   },
   "repository": {
     "type": "git",

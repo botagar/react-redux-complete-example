@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const RepoList = ({repos}) => 
+const RepoList = ({repos}) =>
   <ul>
-     {repos.map(repo => {
-      return <li key={repo.id}>{repo.name}</li> 
-    })} 
+    {repos.map(repo => {
+      return <li key={repo.id}>{repo.name}</li>
+    })}
   </ul>
 
 RepoList.propTypes = {

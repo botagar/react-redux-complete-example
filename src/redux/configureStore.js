@@ -7,10 +7,10 @@ import rootReducer from './rootReducer.js'
 
 const reactDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
 
-export default function configureStore(preloadedState) {
-  const middlewares = [thunk, logger];
-  const middlewareEnhancer = applyMiddleware(...middlewares);
-  const enhancers = compose(middlewareEnhancer, reactDevTools);
+export default function configureStore (preloadedState) {
+  const middlewares = [thunk, logger]
+  const middlewareEnhancer = applyMiddleware(...middlewares)
+  const enhancers = compose(middlewareEnhancer, reactDevTools)
 
-  return createStore(rootReducer, preloadedState, enhancers);
+  return createStore(rootReducer, preloadedState, enhancers)
 }

@@ -7,6 +7,8 @@ const Home = (props) =>
     <GithubRepo />
   </div>
 
-Home.propTypes = {};
+Home.propTypes = {
+  // Import Proptypes to start asserting props (import PropTypes from 'prop-types')
+}
 
 export default Home
