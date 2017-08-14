@@ -1,28 +1,42 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import { Provider } from 'react-redux';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { AppContainer } from 'react-hot-loader'
+import { Provider } from 'react-redux'
+
+import NavBar from './common/navbar.component.jsx'
+
 import initialState from './common/initialState'
 import configureStore from './redux/configureStore'
-import RoutedApp from './common/routedApp.jsx';
-import Home from './home/home.component.jsx';
-import About from './about/about.component.jsx';
+import RoutesConfig from './common/routes.config.js'
+import NavConfig from './common/navLinks.config.js'
 
 const store = configureStore(initialState);
 
 require('./index.html');
 
-const appContainer = document.getElementById('app');
+const appContainer = document.getElementById('app')
 
 const render = () => {
-    ReactDOM.render(
-        <AppContainer>
-            <Provider store={store}>
-                <RoutedApp />
-            </Provider>
-        </AppContainer>,
-        appContainer
-    )
+  ReactDOM.render(
+    <AppContainer>
+        <Provider store={store}>
+          <Router>
+            <div>
+              <NavBar navLinks={NavConfig} />
+
+              <Switch>
+                {RoutesConfig.map((route,index) => (
+                  <Route key={index} path={route.path} component={route.component} exact={route.exact} />
+                ))}
+                {/* <Route component={NoMatch}/> */}
+              </Switch>
+            </div>
+          </Router>
+        </Provider>
+    </AppContainer>,
+    appContainer
+  )
 }
 
 if (module.hot) {
