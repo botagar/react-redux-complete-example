@@ -10,6 +10,7 @@ const Github = (props) =>
       <button type='submit' >List Repositories</button>
     </form>
     { props.loading ? 'Loading...' : '' }
+    { props.error ? 'There was an error' : '' }
     <GithubRepoList repos={props.repos} />
   </div>
 
@@ -20,7 +21,8 @@ Github.propTypes = {
 const mapStateToProps = state => {
   return {
     repos: state.Github.repositories,
-    loading: state.Github.loading
+    loading: state.Github.loading,
+    error: state.Github.error
   }
 }
 

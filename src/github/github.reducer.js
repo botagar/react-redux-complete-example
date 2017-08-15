@@ -5,7 +5,20 @@ const github = (state = [], action) => {
   switch (action.type) {
     case types.SET_REPOSITORIES:
       return update(state, {
-        repositories: {$set: action.repositories}
+        repositories: {$set: action.repositories},
+        loading: {$set: false}
+      })
+    case types.FETCH_REPOSITORIES_START:
+      return update(state, {
+        repositories: {$set: []},
+        loading: {$set: true},
+        error: {$set: false}
+      })
+    case types.FETCH_REPOSITORIES_FAILED:
+      return update(state, {
+        repositories: {$set: []},
+        loading: {$set: false},
+        error: {$set: true}
       })
     default:
       return state

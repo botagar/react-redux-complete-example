@@ -1,6 +1,7 @@
 const InitialState = {
   Github: {
     loading: false,
+    error: false,
     repositories: []
   }
 }
