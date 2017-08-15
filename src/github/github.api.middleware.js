@@ -11,15 +11,13 @@ const GithubApiMiddleware = store => next => async action => {
     case types.FETCH_REPOSITORIES_START:
       let username = action.username
       let endpoint = `https://api.github.com/users/${username}/repos`
-      
+     
       try {
         const res = await axios.get(endpoint)
         return next(setRepositories(res.data))
       } catch (err) {
         return next(fetchRepositoriesFailed(err))
       }
-
-      break
     default:
       break
   }

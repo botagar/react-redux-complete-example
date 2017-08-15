@@ -12,9 +12,6 @@ import githubApiMiddleware from './github.api.middleware'
 
 Chai.use(ChaiThings)
 
-const middlewares = [githubApiMiddleware]
-var mockStoreFactory = ConfigureStore(middlewares)
-
 describe('Github.Api.Middleware', function () {
   const middlewares = [githubApiMiddleware]
   const mockStoreFactory = ConfigureStore(middlewares)
@@ -23,6 +20,7 @@ describe('Github.Api.Middleware', function () {
   var store, mockAxios
 
   before( () => {
+    store = mockStoreFactory({})
     mockAxios = new MockAdapter(Axios)
     mockAxios.onGet('https://api.github.com/users/test/repos').reply(200, testRepositories)
       .onGet('https://api.github.com/users/test-404/repos').reply(404, {error: '404 not found'})
@@ -32,7 +30,17 @@ describe('Github.Api.Middleware', function () {
   })
 
   beforeEach( () => {
-    store = mockStoreFactory({})
+    store.clearActions()
+  })
+
+  it('Should not interfere with other actions', async () => {
+    const otherAction = { type: 'SOME_OTHER_ACTION', irrelavant: 'field' }
+
+    await store.dispatch(otherAction)
+
+    const actions = store.getActions()
+    expect(actions.length).to.eql(1)
+    expect(actions).to.include.something.that.deep.equals(otherAction)
   })
 
   it('Should dispatch FetchSuccess upon successful api call', async () => {
@@ -54,8 +62,6 @@ describe('Github.Api.Middleware', function () {
 
     const actions = store.getActions()
 
-    console.log(actions)
-
     const expectedPayload = fetchRepositoriesFailed('Some generic error message')
     expect(actions).to.include.something.that.deep.equals(fetchRepositoriesAction)
     expect(actions.find(x => x.type === types.FETCH_REPOSITORIES_FAILED)).to.exist
@@ -63,6 +69,6 @@ describe('Github.Api.Middleware', function () {
 
   /*
     I'm not going to cover all the cases here, even thought I'm setup for them.
-    Maybe you can TDD it as an exercise! 💯
+    Maybe you can TDD it as an exercise! 💯 😨 😱 👻
   */
 })

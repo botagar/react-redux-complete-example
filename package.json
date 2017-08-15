@@ -60,11 +60,5 @@
     "webpack": "^3.5.3",
     "webpack-dev-server": "^2.6.1"
   },
-  "devDependencies": {},
-  "babel": {
-    "presets": [
-      "es2016",
-      "react"
-    ]
-  }
+  "devDependencies": {}
 }
