@@ -19,16 +19,23 @@ describe('Github.Api.Middleware', function () {
   const middlewares = [githubApiMiddleware]
   const mockStoreFactory = ConfigureStore(middlewares)
   const testRepositories = [{ id: 1, name: 'Test Repository' }]
+  const malformedTestRepositories = [{ ids: 1, name: 'Oh no... :(' }]
   var store, mockAxios
 
   before( () => {
-    store = mockStoreFactory({})
     mockAxios = new MockAdapter(Axios)
     mockAxios.onGet('https://api.github.com/users/test/repos').reply(200, testRepositories)
+      .onGet('https://api.github.com/users/test-404/repos').reply(404, {error: '404 not found'})
+      .onGet('https://api.github.com/users/test-malformed-response/repos').reply(200, malformedTestRepositories)
+    mockAxios.onGet('https://api.github.com/users/test-timeout/repos').timeout()
+    mockAxios.onGet('https://api.github.com/users/test-net-error/repos').networkError()
+  })
+
+  beforeEach( () => {
+    store = mockStoreFactory({})
   })
 
   it('Should dispatch FetchSuccess upon successful api call', async () => {
-    
     const fetchRepositoriesAction = { type: types.FETCH_REPOSITORIES_START, username: 'test' }
 
     await store.dispatch(fetchRepositoriesAction)
@@ -39,4 +46,23 @@ describe('Github.Api.Middleware', function () {
     expect(actions).to.include.something.that.deep.equals(fetchRepositoriesAction)
     expect(actions).to.include.something.that.deep.equals(successPayload)
   })
+
+  it('Should dispatch FetchError upon 404 response', async () => {
+    const fetchRepositoriesAction = { type: types.FETCH_REPOSITORIES_START, username: 'test-404' }
+
+    await store.dispatch(fetchRepositoriesAction)
+
+    const actions = store.getActions()
+
+    console.log(actions)
+
+    const expectedPayload = fetchRepositoriesFailed('Some generic error message')
+    expect(actions).to.include.something.that.deep.equals(fetchRepositoriesAction)
+    expect(actions.find(x => x.type === types.FETCH_REPOSITORIES_FAILED)).to.exist
+  })
+
+  /*
+    I'm not going to cover all the cases here, even thought I'm setup for them.
+    Maybe you can TDD it as an exercise! 💯
+  */
 })
