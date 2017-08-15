@@ -2,7 +2,7 @@
 [![NSP Status](https://nodesecurity.io/orgs/botagar/projects/336064d2-3c24-4925-bd7c-b738c37f4387/badge)](https://nodesecurity.io/orgs/botagar/projects/336064d2-3c24-4925-bd7c-b738c37f4387)
 [![Code Climate](https://codeclimate.com/github/botagar/react-redux-complete-example/badges/gpa.svg)](https://codeclimate.com/github/botagar/react-redux-complete-example)
 [![bitHound Overall Score](https://www.bithound.io/github/botagar/react-redux-complete-example/badges/score.svg)](https://www.bithound.io/github/botagar/react-redux-complete-example)
-
+[![Coverage Status](https://coveralls.io/repos/github/botagar/react-redux-complete-example/badge.svg?branch=master)](https://coveralls.io/github/botagar/react-redux-complete-example?branch=master)
 
 Checkout the repository
 
