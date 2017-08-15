@@ -9,16 +9,18 @@ const Github = (props) =>
       Github Username: <input type='text' name='username' />
       <button type='submit' >List Repositories</button>
     </form>
+    { props.loading ? 'Loading...' : '' }
     <GithubRepoList repos={props.repos} />
   </div>
 
-Github.PropTypes = {
+Github.propTypes = {
   // Import Proptypes to start asserting props (import PropTypes from 'prop-types')
 }
 
 const mapStateToProps = state => {
   return {
-    repos: state.Github.repositories
+    repos: state.Github.repositories,
+    loading: state.Github.loading
   }
 }
 

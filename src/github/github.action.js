@@ -1,5 +1,4 @@
 import * as types from './github.actionTypes'
-import GithubApi from './github.api'
 
 export const setRepositories = repositories => {
   return {
@@ -8,14 +7,16 @@ export const setRepositories = repositories => {
   }
 }
 
+export const fetchRepositoriesFailed = error => {
+  return {
+    type: types.FETCH_REPOSITORIES_FAILED,
+    error
+  }
+}
+
 export function loadReposForUser (username) {
-  return function (dispatch) {
-    return GithubApi.getAllPublicRepositoriesForUser(username)
-      .then(repos => {
-        dispatch(setRepositories(repos))
-      })
-      .catch(err => {
-        throw (err)
-      })
+  return {
+    type: types.FETCH_REPOSITORIES_START,
+    username
   }
 }
