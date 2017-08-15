@@ -1,13 +1,13 @@
 import 'babel-polyfill'
 import Chai, { expect } from 'chai'
 import ChaiThings from 'chai-things'
-import { describe, it } from 'mocha'
+import { describe, before, beforeEach, it } from 'mocha'
 import ConfigureStore from 'redux-mock-store'
 import Axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 import * as types from './github.actionTypes'
-import { setRepositories, fetchRepositoriesFailed } from './github.action'
+import { setRepositories } from './github.action'
 import githubApiMiddleware from './github.api.middleware'
 
 Chai.use(ChaiThings)
@@ -19,7 +19,7 @@ describe('Github.Api.Middleware', function () {
   const malformedTestRepositories = [{ ids: 1, name: 'Oh no... :(' }]
   var store, mockAxios
 
-  before( () => {
+  before(() => {
     store = mockStoreFactory({})
     mockAxios = new MockAdapter(Axios)
     mockAxios.onGet('https://api.github.com/users/test/repos').reply(200, testRepositories)
@@ -29,7 +29,7 @@ describe('Github.Api.Middleware', function () {
     mockAxios.onGet('https://api.github.com/users/test-net-error/repos').networkError()
   })
 
-  beforeEach( () => {
+  beforeEach(() => {
     store.clearActions()
   })
 
@@ -62,9 +62,7 @@ describe('Github.Api.Middleware', function () {
 
     const actions = store.getActions()
 
-    const expectedPayload = fetchRepositoriesFailed('Some generic error message')
-    expect(actions).to.include.something.that.deep.equals(fetchRepositoriesAction)
-    expect(actions.find(x => x.type === types.FETCH_REPOSITORIES_FAILED)).to.exist
+    expect(actions.find(x => x.type === types.FETCH_REPOSITORIES_FAILED)).to.exist // eslint-disable-line
   })
 
   /*
