@@ -72,7 +72,10 @@
     "branches": 0,
     "exclude": [
       "**/*.spec.js",
-      "dist"
+      "dist",
+      "src/redux",
+      "**/*.config.js",
+      "src/common/initialState.js"
     ],
     "include": [
       "src/**/*.js",

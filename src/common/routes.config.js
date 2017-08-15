@@ -1,7 +1,7 @@
 import Home from '../home/home.component.jsx'
 import About from '../about/about.component.jsx'
 
-module.exports = [
+const Routes = [
   {
     'path': '/',
     'component': Home,
@@ -16,3 +16,5 @@ module.exports = [
     'component': null
   }
 ]
+
+export default Routes

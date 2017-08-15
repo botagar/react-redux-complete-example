@@ -32,17 +32,4 @@ describe('Github.Reducer', function () {
     expect(newState.repositories.length).to.eql(3)
     expect(newState.repositories).to.eql(newRepositories)
   })
-
-  it('Should do something on error', function () {
-    let initialState = { repositories: [] }
-    let invalidPayload = [
-      {error: 'failed to retrieve data'}
-    ]
-
-    deepFreeze(initialState)
-
-    let newState = github(initialState, { type: types.SET_REPOSITORIES, error: invalidPayload })
-
-    expect(newState.repositories.length).to.eql(0)
-  })
 })
