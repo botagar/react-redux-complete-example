@@ -1,5 +1,17 @@
 <html>
 	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
 		<link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/black.css">
     <!-- Theme used for syntax highlighting of code -->
@@ -130,13 +142,68 @@ module.exports = config
             </code></pre>
             <p>Note: "__dirname" is a nodejs variable returning the directory of the currently executing script</p>
           </section>
+          <section>
+            <p>Define an entry point into our app the config object</p>
+            <pre><code class="language-css" data-trim data-noescape>
+entry: [
+  './src/main.js'
+]
+            </code></pre>
+            <p>And an output for the build process</p>
+            <pre><code class="language-css" data-trim data-noescape>
+output: {
+  path: DIST,
+  filename: 'app.bundle.js'
+}
+            </code></pre>
+          </section>
+          <section>
+            <p>Our config should look like this now</p>
+            <pre><code class="language-css" data-trim data-noescape>
+var config = {
+  entry: [
+    './src/main.js'
+  ],
+  output: {
+    path: DIST,
+    filename: 'app.bundle.js'
+  }
+}
+            </code></pre>
+          </section>
+          <section>
+            <p>At this stage, we can call webpack to (try) build stuff!</p>
+            <p>Add the build command to your config.json file</p>
+            <pre><code class="language-css" data-trim data-noescape>
+"scripts": {
+  "build": "webpack",
+  "test": "echo \"Error: no test specified\" && exit 1"
+}
+            </code></pre>
+            <p>Now we can run the following command in the terminal</p>
+            <pre><code class="language-css" data-trim data-noescape>
+yarn build
+            </code></pre>
+            <p>This should create a new directory called "dist", and there should be a file "app.bundle.js"<p>
+          </section>
+          <section>
+            <h1>Cool! But it doesn't really do anything...</h1>
+            <p class="fragment">But that's ok. ONWARDS! ==></p>
+          </section>
         </section>
 			</div>
 		</div>
     <script src="js/reveal.js"></script>
     <script src="lib/js/prism.js"></script>
 		<script>
-			Reveal.initialize();
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
 		</script>
 	</body>
 </html>
