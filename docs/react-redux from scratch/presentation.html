@@ -1,0 +1,142 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/prism.css" />
+    
+    <link rel="stylesheet" href="css/presentation.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h1>Implementing React + Redux from Scratch</h1>
+          <h2>A beginners journey</h2>
+          <div class="slide-1 meta-info">
+            <p class="small">Node version 6.10.1</p>
+            <p class="small">React version 15.6.1</p>
+            <p class="small">Redux version 3.7.2</p>
+            <p class="small">Last updated 2017-08-17</p>
+          </div>
+        </section>
+				<section>
+          <p>We have a brilliant idea! We NEED to create an app which fetches the public repositories from a users GitHub...</p>
+          <p class="fragment">And we've also heard about this newfangled tech called React, and that it meshes well with Redux. Cool~!</p>
+          <p class="fragment">I know NOTHING about either of those frameworks, but how hard could it be?...</p>
+          <p class="fragment">Oh... and I don't like code being scaffolded out for me...</p>
+
+          <p class="fragment sarcastic-note-right">AHHHhahhahahaaahahaahaaaaaaa...... 😈🙈</p>
+        </section>
+        <section>
+          <section>
+            <h2>Setup</h2>
+            <p>I use Yarn for package management</p>
+            <pre><code class="language-css" data-trim>
+npm install -g yarn
+            </code></pre>
+            <br/>
+            <p>I also recommed using nvm and npm-check</p>
+            <pre><code class="language-css" data-trim>
+npm install -g npm-check
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+            </code></pre>
+          </section>
+          <section>
+            <h2>Install the basic core React libs</h2>
+            <pre><code class="language-css" data-trim>
+yarn add react react-dom
+            </code></pre>
+          </section>
+          <section>
+            <h2>Install our build tools</h2>
+            <pre><code class="language-css" data-trim>
+yarn add babel-core babel-loader babel-preset-es2015 \
+  babel-preset-react file-loader webpack webpack-dev-server
+            </code></pre>
+          </section>
+          <section>
+            <h2>Create a new node project</h2>
+            <pre><code class="language-css" data-trim>
+npm init
+            </code></pre>
+            <p>Let's proceed on! ==></p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Hello World</h1>
+            <p>Let's create our index.html and main.jg files in the src directory</p>
+            <img src="resources/slide-3.1-file-structure.png" />
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>index.html</h2>
+              <pre><code class="language-css" data-trim data-noescape>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+      &lt;title&gt;Example App&lt;/title&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+      &lt;div id = &quot;app&quot;&gt;&lt;/div&gt;
+      &lt;script src = &quot;app.bundle.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+            <p>Breakdown Below</p>
+          </section>
+          <section>
+            <pre><code class="language-css" data-trim data-noescape>
+&lt;head&gt;
+  &lt;title&gt;Example App&lt;/title&gt;
+&lt;/head&gt;
+            </code></pre>
+            <p>Nothing special needs to go here.</p>
+            <p>You can add your usual meta tags and other "head" related functionality</p>
+          </section>
+          <section>
+            <pre><code class="language-css" data-trim data-noescape>
+&lt;body&gt;
+  &lt;div id = &quot;app&quot;&gt;&lt;/div&gt;
+  &lt;script src = &quot;app.bundle.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+            </code></pre>
+            <p>Our React App will be rendered in the div with id "app"</p>
+            <p>And of course, we need to import our js (which we will be building)</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Now let's setup our build system!</h2>
+            <p>We'll be using Webpack and Babel to transpile and package our app</p>
+          </section>
+          <section>
+            <p>Create a file in the src directory called "webpack.config.js" then lets start with the following:</p>
+            <pre><code class="language-css" data-trim data-noescape>
+var webpack = require('webpack')
+var path = require('path')
+
+var SRC = path.resolve(__dirname, 'src')
+var DIST = path.resolve(__dirname, 'dist')
+
+var config = {
+  
+}
+
+module.exports = config
+            </code></pre>
+            <p>Note: "__dirname" is a nodejs variable returning the directory of the currently executing script</p>
+          </section>
+        </section>
+			</div>
+		</div>
+    <script src="js/reveal.js"></script>
+    <script src="lib/js/prism.js"></script>
+		<script>
+			Reveal.initialize();
+		</script>
+	</body>
+</html>

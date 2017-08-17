@@ -1,0 +1,40 @@
+.reveal h1 {
+  font-size: 2em;
+}
+
+.reveal h2 {
+  font-size: 1.5em;
+}
+
+.reveal p {
+  font-size: 0.5em;
+}
+
+p.small {
+  font-size: 0.35em;
+}
+
+code.language-css {
+  font-size: 0.8em;
+}
+
+.sarcastic-note-right {
+  color: grey;
+  vertical-align: bottom;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.slide-1.meta-info {
+  text-align: left;
+  vertical-align: bottom;
+  bottom: 0;
+  position: fixed;
+}
+
+.slide-1.meta-info p {
+  color: grey;
+  padding: 0;
+  margin: 0;
+}
