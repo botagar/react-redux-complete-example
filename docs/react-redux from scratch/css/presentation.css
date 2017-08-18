@@ -14,6 +14,10 @@ p.small {
   font-size: 0.35em;
 }
 
+.hidden {
+  display: none;
+}
+
 code.language-css {
   font-size: 0.8em;
 }

@@ -2,27 +2,18 @@
 	<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-    </script>
 
 		<link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/black.css">
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/prism.css" />
+		<link rel="stylesheet" href="lib/css/zenburn.css">
     
     <link rel="stylesheet" href="css/presentation.css">
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
+				<section> <!-- Slide 1: cover slide -->
           <h1>Implementing React + Redux from Scratch</h1>
           <h2>A beginners journey</h2>
           <div class="slide-1 meta-info">
@@ -32,7 +23,7 @@
             <p class="small">Last updated 2017-08-17</p>
           </div>
         </section>
-				<section>
+				<section> <!-- Slide 2: into to project -->
           <p>We have a brilliant idea! We NEED to create an app which fetches the public repositories from a users GitHub...</p>
           <p class="fragment">And we've also heard about this newfangled tech called React, and that it meshes well with Redux. Cool~!</p>
           <p class="fragment">I know NOTHING about either of those frameworks, but how hard could it be?...</p>
@@ -40,168 +31,280 @@
 
           <p class="fragment sarcastic-note-right">AHHHhahhahahaaahahaahaaaaaaa...... 😈🙈</p>
         </section>
-        <section>
-          <section>
-            <h2>Setup</h2>
-            <p>I use Yarn for package management</p>
-            <pre><code class="language-css" data-trim>
-npm install -g yarn
-            </code></pre>
-            <br/>
-            <p>I also recommed using nvm and npm-check</p>
-            <pre><code class="language-css" data-trim>
-npm install -g npm-check
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-            </code></pre>
+        <section> <!-- Slide 3: install basic packages -->
+          <section data-markdown>
+            <script type="text/template">
+              ## Setup
+              I use [Yarn](https://yarnpkg.com/) for package management
+              ```
+              npm install -g yarn
+              ```
+              <br />
+              <br />
+              I also recommend using [nvm](https://github.com/creationix/nvm) for node version management 
+              and [npm-check](https://www.npmjs.com/package/npm-check) for keeping track of and updating package versions
+              ```
+              npm install -g npm-check
+              curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+              ```
+            </script>
           </section>
-          <section>
-            <h2>Install the basic core React libs</h2>
-            <pre><code class="language-css" data-trim>
-yarn add react react-dom
-            </code></pre>
+          <section data-markdown>
+            <script type="text/template">
+              ## Install the basic core React libs
+              ```
+              yarn add react react-dom
+              ```
+            </script>
           </section>
-          <section>
-            <h2>Install our build tools</h2>
-            <pre><code class="language-css" data-trim>
-yarn add babel-core babel-loader babel-preset-es2015 \
-  babel-preset-react file-loader webpack webpack-dev-server
-            </code></pre>
+          <section data-markdown>
+            <script type="text/template">
+              ## Install our build tools
+              ```
+              yarn add babel-core babel-loader babel-preset-es2015 \
+                babel-preset-react file-loader webpack webpack-dev-server
+              ```
+            </script>
           </section>
-          <section>
-            <h2>Create a new node project</h2>
-            <pre><code class="language-css" data-trim>
-npm init
-            </code></pre>
-            <p>Let's proceed on! ==></p>
+          <section data-markdown>
+            <script type="text/template">
+              ## Create a new node project
+              ```
+              npm init
+              ```
+              <br />
+              And proceed onwards!! ==>
+            </script>
           </section>
         </section>
-        <section>
+        <section> <!-- Slide 4: setup main and index -->
           <section>
             <h1>Hello World</h1>
-            <p>Let's create our index.html and main.jg files in the src directory</p>
+            <p>Let's create our index.html and main.js files in the src directory</p>
             <img src="resources/slide-3.1-file-structure.png" />
           </section>
         </section>
-        <section>
-          <section>
-            <h2>index.html</h2>
-              <pre><code class="language-css" data-trim data-noescape>
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-      &lt;title&gt;Example App&lt;/title&gt;
-  &lt;/head&gt;
-
-  &lt;body&gt;
-      &lt;div id = &quot;app&quot;&gt;&lt;/div&gt;
-      &lt;script src = &quot;app.bundle.js&quot;&gt;&lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-            </code></pre>
-            <p>Breakdown Below</p>
+        <section> <!-- Slide 5: index.html -->
+          <section data-markdown>
+            <script type="text/template">
+              ## index.html
+              ```
+                <html>
+                  <head>
+                      <title>Example App</title>
+                  </head>
+                  <body>
+                      <div id = "app"></div>
+                      <script src = "app.bundle.js">__SCRIPT_END__
+                  </body>
+                </html>
+              ```
+              <div class="hidden">`</div>
+              <br />
+              Let's quickly break down what's going on here
+            </script>
           </section>
-          <section>
-            <pre><code class="language-css" data-trim data-noescape>
-&lt;head&gt;
-  &lt;title&gt;Example App&lt;/title&gt;
-&lt;/head&gt;
-            </code></pre>
-            <p>Nothing special needs to go here.</p>
-            <p>You can add your usual meta tags and other "head" related functionality</p>
+          <section data-markdown>
+            <script type="text/template">
+              ```
+              <head>
+                  <title>Example App</title>
+              </head>
+              ```
+              <br />
+              Nothing special needs to go here.  
+              You can add your usual meta tags and other "head" related functionality.
+            </script>
           </section>
-          <section>
-            <pre><code class="language-css" data-trim data-noescape>
-&lt;body&gt;
-  &lt;div id = &quot;app&quot;&gt;&lt;/div&gt;
-  &lt;script src = &quot;app.bundle.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-            </code></pre>
-            <p>Our React App will be rendered in the div with id "app"</p>
-            <p>And of course, we need to import our js (which we will be building)</p>
+          <section data-markdown>
+            <script type="text/template">
+              ```
+              <body>
+                  <div id = "app"></div>
+                  <script src = "app.bundle.js">__SCRIPT_END__
+              </body>
+              ```
+              <div class="hidden">`</div>
+              <br />
+              Our React App will be rendered in the div with id "app"  
+              And of course, we need to import our js (which we will be building)
+            </script>
           </section>
         </section>
-        <section>
-          <section>
-            <h2>Now let's setup our build system!</h2>
-            <p>We'll be using Webpack and Babel to transpile and package our app</p>
-          </section>
-          <section>
-            <p>Create a file in the src directory called "webpack.config.js" then lets start with the following:</p>
-            <pre><code class="language-css" data-trim data-noescape>
-var webpack = require('webpack')
-var path = require('path')
+        <section> <!-- Slide 6: webpack.config.js -->
+          <section data-markdown>
+            <script type="text/template">
+              ## Now let's setup our build system!
+              (Skip this section if you are comfortable with basic webpack setup)  
+              We'll be using Webpack and Babel to transpile and package our app  
+                
+              Create a file in the src directory called "webpack.config.js" then lets start with the following:
+              ```
+              var webpack = require('webpack')
+              var path = require('path')
 
-var SRC = path.resolve(__dirname, 'src')
-var DIST = path.resolve(__dirname, 'dist')
+              var SRC = path.resolve(__dirname, 'src')
+              var DIST = path.resolve(__dirname, 'dist')
 
-var config = {
-  
-}
+              var config = {
+                
+              }
 
-module.exports = config
-            </code></pre>
-            <p>Note: "__dirname" is a nodejs variable returning the directory of the currently executing script</p>
+              module.exports = config
+              ```
+              Note: "__dirname" is a nodejs variable returning the directory of the currently executing script
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Define an entry point and build output for our app
+              ```
+              var config = {
+                entry: [
+                  './src/main.js'
+                ],
+                output: {
+                  path: DIST,
+                  filename: 'app.bundle.js'
+                }
+              }
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              At this stage, we can call webpack to (try) build stuff!  
+              Add the build command to your config.json file
+              ```
+              "scripts": {
+                "build": "webpack",
+                "test": "echo \"Error: no test specified\" && exit 1"
+              }
+              ```
+              Now we can run the following command in the terminal
+              ```
+              yarn build
+              ```
+              This should create a new directory called "dist", and there should be a file "app.bundle.js"
+            </script>
           </section>
           <section>
-            <p>Define an entry point into our app the config object</p>
-            <pre><code class="language-css" data-trim data-noescape>
-entry: [
-  './src/main.js'
-]
-            </code></pre>
-            <p>And an output for the build process</p>
-            <pre><code class="language-css" data-trim data-noescape>
-output: {
-  path: DIST,
-  filename: 'app.bundle.js'
-}
-            </code></pre>
-          </section>
-          <section>
-            <p>Our config should look like this now</p>
-            <pre><code class="language-css" data-trim data-noescape>
-var config = {
-  entry: [
-    './src/main.js'
-  ],
-  output: {
-    path: DIST,
-    filename: 'app.bundle.js'
-  }
-}
-            </code></pre>
-          </section>
-          <section>
-            <p>At this stage, we can call webpack to (try) build stuff!</p>
-            <p>Add the build command to your config.json file</p>
-            <pre><code class="language-css" data-trim data-noescape>
-"scripts": {
-  "build": "webpack",
-  "test": "echo \"Error: no test specified\" && exit 1"
-}
-            </code></pre>
-            <p>Now we can run the following command in the terminal</p>
-            <pre><code class="language-css" data-trim data-noescape>
-yarn build
-            </code></pre>
-            <p>This should create a new directory called "dist", and there should be a file "app.bundle.js"<p>
-          </section>
-          <section>
-            <h1>Cool! But it doesn't really do anything...</h1>
+            <h2>Cool! But it doesn't really do anything...</h2>
             <p class="fragment">But that's ok. ONWARDS! ==></p>
           </section>
         </section>
+        <section> <!-- Slide 7: main.js -->
+          <section data-markdown>
+            <script type="text/template">
+              Let's start creating content.  
+              In main.js, copy+paste the following
+              ```
+              import React from 'react'
+              import ReactDOM from 'react-dom'
+
+              const appContainer = document.getElementById('app')
+
+              ReactDOM.render(
+                <h1>Hello World</h1>,
+                appContainer
+              )
+              ```
+              <br />
+              There is an issue now. If you try build this, you will get an error.  
+              This is because Webpack does not know how to handle this content.  
+              We need a [Transpiler](https://en.wikipedia.org/wiki/Source-to-source_compiler)! Good thing we installed [Babel](https://babeljs.io) 😉
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              The ReactDOM.render() method is where the main magic happens.  
+              As defined in the [ReactDOM docs](https://facebook.github.io/react/docs/react-dom.html), render() takes the following arguments
+              ```
+              ReactDOM.render(
+                element,
+                container,
+                [callback]
+              )
+              ```
+              Where "element" is the what we want do display (in our case, "<h1>hello world</h1>") and  
+              "container" is the div with the id "app".  
+              <br />
+              The callback is optional, and we will not be making use of it this time.
+            </script>
+          </section>
+        </section>
+        <section> <!-- Slide 8: babel setup -->
+          <section data-markdown>
+            <script type="text/template">
+              ## Babel setup
+              (skip this section if you are comfortable with babel setup)  
+              <br />
+              Let's add a new file called ".babelrc" and populate it with the following
+              ```
+              {
+                "presets": [
+                  "react",
+                  "es2015"
+                ]
+              }
+              ```
+              This congifures babel to support es2015 and react .jsx format.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Note. The .babelrc file is an extraction of the same config which can go into the package.json file.   
+               <br />
+              ```
+              {
+                "name": "myapp",
+                "version": "1.0.0",
+                "description": "",
+                "main": "index.js",
+                "scripts": {
+                  "build": "webpack"
+                },
+                "author": "",
+                "license": "ISC",
+                "dependencies": {
+                  ...
+                },
+                "babel": {
+                  "presets": [
+                    "react",
+                    "es2015"
+                  ]
+                }
+              }
+              ```
+            </script>
+          </section>
+          <section>
+            <script type="text/template">
+              At this point, we can run
+              ```
+              yarn build
+              ```
+              and we should have a successful build.  
+              <br />
+              To do a quick check, we can copy our index.html file into our dist directory then open it in a browser.  
+              We should see "Hello World".
+            </script>
+          </section>
+        </section>
 			</div>
-		</div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
     <script src="js/reveal.js"></script>
-    <script src="lib/js/prism.js"></script>
 		<script>
 			Reveal.initialize({
 				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
 				]
 			});
 		</script>
