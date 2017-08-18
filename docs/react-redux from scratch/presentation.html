@@ -53,7 +53,7 @@
             <script type="text/template">
               ## Install the basic core React libs
               ```
-              yarn add react react-dom
+              yarn add react react-dom react-router-dom
               ```
             </script>
           </section>
@@ -253,7 +253,8 @@
           </section>
           <section data-markdown>
             <script type="text/template">
-              Note. The .babelrc file is an extraction of the same config which can go into the package.json file.   
+              ## Note
+              The .babelrc file is an extraction of the same config which can go into the package.json file.   
                <br />
               ```
               {
@@ -279,9 +280,9 @@
               ```
             </script>
           </section>
-          <section>
+          <section data-markdown>
             <script type="text/template">
-              At this point, we can run
+              At this point, we can run  
               ```
               yarn build
               ```
@@ -289,6 +290,184 @@
               <br />
               To do a quick check, we can copy our index.html file into our dist directory then open it in a browser.  
               We should see "Hello World".
+            </script>
+          </section>
+        </section>
+        <section> <!-- Slide 9: menubar setup -->
+          <section data-markdown>
+            <script type="text/template">
+              # Building a navigation bar
+              Hello world is great and all, but we want to turn this into a site that actually does something
+              We'll start by adding a really quick navigation bar.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Setting up the files
+              For our navigation bar, we want to create a directory under src called common (We will be following a DDD approach to file structure).  
+              Then we'll add a file called "navbar.component.jsx"  
+              <img src="resources/slide-9.1-file-structure.png" />
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Let's start by defining a stateless function which will return our markup in "navbar.component.jsx"
+              ```
+              import React from 'react'
+              import { NavLink } from 'react-router-dom'
+
+              const NavBar = () =>
+                <div></div>
+
+              export default NavBar
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Inside those div's, we should setup our list of links as follows
+              ```
+              <div id="nav-bar">
+                <ul className='nav-links'>
+                    <li key='home'>
+                        <NavLink to={'/'} activeClassName='active'>Home</NavLink>
+                    </li>
+                    <li key='github'>
+                        <NavLink to={'/github'} activeClassName='active'>Github</NavLink>
+                    </li>
+                </ul>
+              </div>
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Our file now looks like
+              ```
+              import React from 'react'
+              import { NavLink } from 'react-router-dom'
+
+              const NavBar = () =>
+                <div id="nav-bar">
+                  <ul className='nav-links'>
+                      <li key='home'>
+                          <NavLink to={'/'} activeClassName='active'>Home</NavLink>
+                      </li>
+                      <li key='github'>
+                          <NavLink to={'/github'} activeClassName='active'>Github</NavLink>
+                      </li>
+                  </ul>
+                </div>
+
+              export default NavBar
+              ```
+              Let's dive into what we've setup here
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ```
+              <NavLink to={'/'} activeClassName='active'>Home</NavLink>
+              ```
+              The main difference here from how a navigation header is normally constructed is the use  
+              of the `<NavLink>` element rather than a standard `<a>`.  
+              <br />
+              The 'to' property is the relative link to the desired page. The above example links to the home page.  
+              The 'activeClassName' property give the link element the class name when it is active. This can be used to style active or inactive links.  
+              See the [docs](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/NavLink.md) for more information on the NavLink element.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              The exported NavBar can be used in our *main.js* file to be rendered to the page.  
+              <br />
+              Before we can do that though, we need to setup routing. This too can be done within *main.js*.  
+              Add the following import to *main.js*
+              ```
+              import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+              ```
+              Then within the `<Router>` element in the ReactDOM.render() method, setup our routing switch as follows
+              ```
+              ReactDOM.render(
+                <Router>
+                  <div>
+                    <Switch>
+                    </Switch>
+                  </div>
+                </Router>,
+                appContainer
+              )
+              ```
+              (Yes, *Hello World* has been retired)
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Within the `<Switch>` elements, we can define all our routes.  
+              We don't really have any pages yet, but we need to setup as many routes as we have links, even if they are empty.  
+              Add 2 routes like so
+              ```
+              <Switch>
+                <Route path={'/'} component={null} exact />
+                <Route path={'/github'} component={null} exact />
+              </Switch>
+              ```
+              <br />
+              We will leave the routes like this for now. Let's now include our NavBar.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Still in *main.js*, import our NavBar component
+              ```
+              import NavBar from './common/navbar.component.jsx'
+              ```
+              Then add our NavBar to the render() method just above the `<Switch>`
+              ```
+              <Router>
+                <NavBar />
+                <Switch>
+                  <Route path={'/'} component={null} exact />
+                  <Route path={'/github'} component={null} exact />
+                </Switch>
+              </Router>
+              ```
+              <br />
+              However....
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Now we'll run into trouble here as the Router element can only have 1 child element.  
+              We can fix this by wrapping our Navbar and Switch in a single div, leaving our render() method looking like
+              ```
+              ReactDOM.render(
+                <Router>
+                  <div>
+                    <NavBar />
+                    <Switch>
+                      <Route path={'/'} component={null} exact />
+                      <Route path={'/github'} component={null} exact />
+                    </Switch>
+                  </div>
+                </Router>,
+                appContainer
+              )
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              We can build now successfully, but there should be a better way to test our site.  
+              <br />
+              Queue our webpack dev server! ==>
+            </script>
+          </section>
+        </section>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              # Dev server and Hot Reloading
             </script>
           </section>
         </section>
