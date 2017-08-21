@@ -29,7 +29,7 @@ const render = () => {
                 {RoutesConfig.map((route,index) => (
                   <Route key={index} path={route.path} component={route.component} exact={route.exact} />
                 ))}
-                {/* <Route component={NoMatch}/> */}
+                {/* <Route component={NoMatch}/> some 404 page */}
               </Switch>
             </div>
           </Router>
