@@ -7,7 +7,7 @@
     "test": "nyc mocha --compilers js:babel-core/register src/**/**.spec.js",
     "coverage": "nyc report --reporter=text-lcov  | coveralls",
     "build": "webpack",
-    "serve": "webpack-dev-server --hot --inline --progress --colors --watch --content-base ./src --open",
+    "serve": "webpack-dev-server",
     "lint": "standard src/**/**",
     "lint-fix": "standard —-fix src/**/**"
   },
