@@ -62,7 +62,7 @@
               ## Install our build tools
               ```
               yarn add babel-core babel-loader babel-preset-es2015 \
-                babel-preset-react file-loader webpack webpack-dev-server
+                babel-preset-react webpack
               ```
             </script>
           </section>
@@ -468,6 +468,148 @@
           <section data-markdown>
             <script type="text/template">
               # Dev server and Hot Reloading
+              We're going to setup our hot reloading dev server so that we can develop and see our changes in real time!
+
+              Oh the fascinating modern age we live in!!
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Installing packages
+              ```
+              yarn add webpack-dev-server react-hot-loader@3.0.0-beta.7 file-loader
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Configuration
+              To begin our configuration, we'll need to revisit our *webpack.config.js* file.
+              Add the following to loaders array
+              ```
+              {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
+              }
+              ```
+              This tells webpack to use babel to interpret jsx files, but to exclude our installed node modules.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              We'll also add a config entry to our loaders array to copy our static files to our dist folder
+              ```
+              {
+                test: /\.html$/,
+                loader: 'file-loader?name=[name].[ext]'
+              }
+              ```
+              For our file loader to actually work though, we'll need to include the files we want in one of our compiled files.  
+              Let's open up our *main.js* then add the following at the end of our imports
+              ```
+              import './index.html'
+              ```
+              It's important to note that the webpack 2 file loader does not automatically copy all files that match the
+              test regex, but only those that are **also** included somewhere in the project.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              We then need to add our dev server config to the config object and define another entry point into our app (the hot reloader module)
+              ```
+              devServer: {
+                inline: true, // Hot reloading
+                port: 8081, // Port which the Dev Server will listen on
+                contentBase: './src', // Where the entry to your app is
+                open: true // Open site in new browser tab upon command execution
+              }
+              ```
+              Insert into our entry array **AS THE FIRST ENTRY**
+              ```
+              'react-hot-loader/patch'
+              ```
+              This tells webpack to start a dependency graph at the hot loader module as well as one from our main.  
+              More on this can be found [here](https://webpack.js.org/concepts/entry-points/)  
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+               Let's also include a plugin which will make debugging much nicer
+              ```
+              plugins: [
+                new webpack.NamedModulesPlugin()
+              ]
+              ```
+              (the plugins array goes in the config object)  
+              The Named Modules Plugin prints the module name and path instead of an internal ID when printing from a module.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              We still need to setup the hot module reloading in our *main.js* file.
+              To do this, lets extract our ReactDOM.render() method into its own method, creatively named *render()*
+              ```
+              const render = () => {
+                ReactDOM.render(
+                  <Router>
+                    <div>
+                      <NavBar />
+                      <Switch>
+                        <Route path={'/'} component={null} exact />
+                        <Route path={'/github'} component={null} exact />
+                      </Switch>
+                    </div>
+                  </Router>,
+                  appContainer
+                )
+              }
+              render()
+              ```
+              We haven't changed any functionality at this point but we are now primed to setup hot reloading.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              We still need to setup the hot module reloading in our *main.js* file.
+              To do this, lets extract our ReactDOM.render() method into its own method, creatively named *render()*
+              ```
+              const render = () => {
+                ReactDOM.render(
+                  <Router>
+                    <div>
+                      <NavBar />
+                      <Switch>
+                        <Route path={'/'} component={null} exact />
+                        <Route path={'/github'} component={null} exact />
+                      </Switch>
+                    </div>
+                  </Router>,
+                  appContainer
+                )
+              }
+              render()
+              ```
+              We haven't changed any functionality at this point but we are now primed to setup hot reloading.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              (In *main.js*) Import the hot reloading app container
+              ```
+              import { AppContainer } from 'react-hot-loader'
+              ```
+              Then wrap our `<Route>` element in the `<AppContainer>` element in our render() method.  
+              <br />
+              Between where we define render() and where we call render(), add the following
+              ```
+              if (module.hot) {
+                module.hot.accept('./main.js', () => {
+                  render()
+                })
+              }
+              ```
+              This code is boiler plate code, and is nessesary for HMR (Hot Module Replacement)
             </script>
           </section>
         </section>

@@ -11,9 +11,10 @@ import configureStore from './redux/configureStore'
 import RoutesConfig from './common/routes.config.js'
 import NavConfig from './common/navLinks.config.js'
 
-const store = configureStore(initialState);
+import './index.html'
+import './reset.css'
 
-require('./index.html');
+const store = configureStore(initialState);
 
 const appContainer = document.getElementById('app')
 

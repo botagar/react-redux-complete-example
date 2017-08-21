@@ -15,6 +15,7 @@ export const fetchRepositoriesFailed = error => {
 }
 
 export function loadReposForUser (username) {
+  // could also check for username errors here
   return {
     type: types.FETCH_REPOSITORIES_START,
     username

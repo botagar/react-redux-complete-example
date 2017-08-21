@@ -16,10 +16,10 @@ var config = {
   },
 
   devServer: {
-    inline: true,
-    port: 8081,
-    contentBase: './src',
-    open: true
+    inline: true, // Hot reloading
+    port: 8081, // Port which the Dev Server will listen on
+    contentBase: './src', // Where the entry to your app is
+    open: true // Open site in new browser tab upon command execution
   },
 
   module: {

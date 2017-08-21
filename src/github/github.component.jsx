@@ -29,6 +29,7 @@ const mapStateToProps = state => {
 const mapDispatchToEvents = dispatch => {
   return {
     onGithubUsernameSearchSubmit: (event) => {
+      // Do some input checking here if you need
       dispatch(loadReposForUser(event.target.querySelector('input').value))
     }
   }
