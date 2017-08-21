@@ -1,7 +1,7 @@
 {
-  "name": "albion-helper",
+  "name": "example-template",
   "version": "1.0.0",
-  "description": "A helper tool for Albion Online players",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha --compilers js:babel-core/register src/**/**.spec.js",
@@ -16,9 +16,7 @@
     "url": "https://github.com/botagar/albion-helper"
   },
   "keywords": [
-    "Albion",
-    "Online",
-    "MMORPG"
+    "Template"
   ],
   "author": "John G",
   "license": "ISC",
