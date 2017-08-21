@@ -10,7 +10,7 @@
     "serve": "webpack-dev-server",
     "lint": "standard src/**/**",
     "lint-fix": "standard —-fix src/**/**",
-    "clean": "rm -rf ./dist ./coverage ./nyc_output ./node_modules"
+    "cleanup": "rm -rf ./dist ./coverage ./.nyc_output ./node_modules"
   },
   "repository": {
     "type": "git",

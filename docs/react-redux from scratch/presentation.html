@@ -464,7 +464,7 @@
             </script>
           </section>
         </section>
-        <section>
+        <section> <!-- Slide 10: hot reloading -->
           <section data-markdown>
             <script type="text/template">
               # Dev server and Hot Reloading
@@ -535,7 +535,7 @@
           </section>
           <section data-markdown>
             <script type="text/template">
-               Let's also include a plugin which will make debugging much nicer
+              Let's also include a plugin which will make debugging much nicer
               ```
               plugins: [
                 new webpack.NamedModulesPlugin()
@@ -543,30 +543,6 @@
               ```
               (the plugins array goes in the config object)  
               The Named Modules Plugin prints the module name and path instead of an internal ID when printing from a module.
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              We still need to setup the hot module reloading in our *main.js* file.
-              To do this, lets extract our ReactDOM.render() method into its own method, creatively named *render()*
-              ```
-              const render = () => {
-                ReactDOM.render(
-                  <Router>
-                    <div>
-                      <NavBar />
-                      <Switch>
-                        <Route path={'/'} component={null} exact />
-                        <Route path={'/github'} component={null} exact />
-                      </Switch>
-                    </div>
-                  </Router>,
-                  appContainer
-                )
-              }
-              render()
-              ```
-              We haven't changed any functionality at this point but we are now primed to setup hot reloading.
             </script>
           </section>
           <section data-markdown>
@@ -609,7 +585,168 @@
                 })
               }
               ```
-              This code is boiler plate code, and is nessesary for HMR (Hot Module Replacement)
+              This code is boiler plate code, and is nessesary for HMR (Hot Module Replacement).  
+              Note: we pass in the path to main.js as the entry point for the HMR server to build its dependency graph.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Finally, add the following script to your *package.json*
+              ```
+              "serve": "webpack-dev-server"
+              ```
+              then simply run
+              ```
+              yarn serve
+              ```
+              and watch a new tab open in your default browser on port 8081 with our ~~shiny~~ navigation links  
+              <br />
+              <br />
+              Oh fine, I'll admit it doesn't look all that appealing.  
+              Resulting code below...  
+              Styling ==>  
+            </script>
+          </section>
+          <section data-markdown> <!-- main.js -->
+            <script type="text/template">
+              *main.js*
+              ```
+              import React from 'react'
+              import ReactDOM from 'react-dom'
+              import { AppContainer } from 'react-hot-loader'
+              import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
+              import NavBar from './common/navbar.component.jsx'
+
+              import './index.html'
+
+              const appContainer = document.getElementById('app')
+
+              const render = () => {
+                ReactDOM.render(
+                  <AppContainer>
+                    <Router>
+                      <div>
+                        <NavBar />
+                        <Switch>
+                          <Route path={'/'} component={null} exact />
+                          <Route path={'/github'} component={null} exact />
+                        </Switch>
+                      </div>
+                    </Router>
+                  </AppContainer>,
+                  appContainer
+                )
+              }
+
+              if (module.hot) {
+                  module.hot.accept('./main.js', () => {
+                      render()
+                  })
+              }
+
+              render()
+              ```
+            </script>
+          </section>
+          <section data-markdown> <!-- webpack.config.js -->
+            <script type="text/template">
+              *webpack.config.js*
+              ```
+              var webpack = require('webpack')
+              var path = require('path')
+
+              var SRC = path.resolve(__dirname, 'src')
+              var DIST = path.resolve(__dirname, 'dist')
+
+              var config = {
+                entry: [
+                  './src/main.js'
+                ],
+
+                output: {
+                  path: DIST,
+                  filename: 'app.bundle.js'
+                },
+
+                devServer: {
+                  inline: true, // Hot reloading
+                  port: 8081, // Port which the Dev Server will listen on
+                  contentBase: './src', // Where the entry to your app is
+                  open: true // Open site in new browser tab upon command execution
+                },
+
+                module: {
+                  loaders: [
+                    {
+                      test: /\.jsx?$/,
+                      exclude: /node_modules/,
+                      loader: 'babel-loader'
+                    },
+                    {
+                      test: /\.html$/,
+                      loader: 'file-loader?name=[name].[ext]'
+                    }
+                  ]
+                },
+
+                plugins: [
+                  new webpack.NamedModulesPlugin()
+                ]
+              }
+
+              module.exports = config
+              ```
+            </script>
+          </section>
+        </section>
+        <section> <!-- Slide 11: styling -->
+          <section data-markdown>
+            <script type="text/template">
+              # Basic styling
+              Putting lipstick on our ~~pig~~ app
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Today, we break from convention! No global styleseets!!!  
+              We're going *inline styles*  
+              <img src='resources/deal-with-it.gif' />
+              <br />
+              In all seriousness, we will be following [FaceBook's approach](https://facebook.github.io/react/docs/dom-elements.html#style) 
+              here.  
+              Syling in React can be achieved in many ways. I suggest reading up the various opinions of inline styles vs css, as there doesn't seem to be
+              an overwhelming consensus on what is right.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Going back to our *navbar.component.jsx* file, we're going to create a js object to represent our sytles.
+              ```
+              const navlinkBarStyle = {
+                listStyleType: 'none',
+                display: 'inline-block',
+                padding: '5px'
+              }
+              ```
+              And then add them to the `<li>` elements
+              ```
+              <li key='home' style={navlinkBarStyle}>
+                <NavLink to={'/'} activeClassName='active'>Home</NavLink>
+              </li>
+              <li key='github' style={navlinkBarStyle}>
+                <NavLink to={'/github'} activeClassName='active'>Github</NavLink>
+              </li>
+              ```
+              Note. When defining styles, convert hyphen case to camelCase.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              That's all I'll cover here.  
+              As I said, how you style your application comes down to your needs and preferences.  
+              <br />
+              Redux ==>
             </script>
           </section>
         </section>
