@@ -2,7 +2,7 @@ import * as types from './github.actionTypes'
 
 export const setRepositories = repositories => {
   return {
-    type: types.SET_REPOSITORIES,
+    type: types.FETCH_REPOSITORIES_SUCCESS,
     repositories
   }
 }
@@ -14,8 +14,8 @@ export const fetchRepositoriesFailed = error => {
   }
 }
 
-export function loadReposForUser (username) {
-  // could also check for username errors here
+export const loadReposForUser = username => {
+  // validate username?
   return {
     type: types.FETCH_REPOSITORIES_START,
     username

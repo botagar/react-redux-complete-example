@@ -14,7 +14,7 @@ import NavConfig from './common/navLinks.config.js'
 import './index.html'
 import './reset.css'
 
-const store = configureStore(initialState);
+const store = configureStore(initialState)
 
 const appContainer = document.getElementById('app')
 
@@ -47,5 +47,3 @@ if (module.hot) {
 }
 
 render()
-
-store.subscribe(render)

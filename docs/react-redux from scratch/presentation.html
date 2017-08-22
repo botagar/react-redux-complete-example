@@ -750,6 +750,254 @@
             </script>
           </section>
         </section>
+        <section> <!-- Slide 12: redux store setup -->
+          <section data-markdown>
+            <script type="text/template">
+              # Setting up the Redux store
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Let's install Redux and supporting pacakges.  
+              In our terminal, run
+              ```
+              yarn add redux react-redux redux-thunk redux-logger
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              We now need to setup our redux store.  
+              Create a folder called *redux* in our *src* directory and create a filed called *configureStore.js*
+              ```
+              src/redux/configureStore.js
+              ```
+              In that file, add the following
+              ```
+              import { createStore, applyMiddleware, compose } from 'redux'
+              import thunk from 'redux-thunk'
+              import { logger } from 'redux-logger'
+              import githubApi from '../github/github.api.middleware.js'
+              import rootReducer from './rootReducer.js'
+
+              const reactDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
+
+              const configureStore = (preloadedState) => {
+                const middlewares = [thunk, githubApi, logger]
+                const middlewareEnhancer = applyMiddleware(...middlewares)
+                const enhancers = compose(middlewareEnhancer, reactDevTools)
+
+                return createStore(rootReducer, preloadedState, enhancers)
+              }
+
+              export default configureStore
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ### Line by line breakdown
+              ```
+              import { createStore, applyMiddleware, compose } from 'redux'
+              ```
+              *createStore* is for creating the redux store.  
+              *applyMiddleware* applies [redux middleware](http://redux.js.org/docs/advanced/Middleware.html). 
+              I'll touch more upon middleware in a few slides.  
+              *compose* allows use to string together a series of enhancers for our store.  
+              <br />
+              ```
+              import thunk from 'redux-thunk'
+              ```
+              thunk is a middleware which allows for easier management of async actions (such as web api calls).
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ```
+              import { logger } from 'redux-logger'
+              ```
+              This is the default instance of a logger middleware. It needs to be the last middleware initialised.  
+              <br />
+              ```
+              import githubApi from '../github/github.api.middleware.js'
+              import rootReducer from './rootReducer.js'
+              ```
+              These do not exist yet. We'll be creating them soon... very soon....  
+              <br />
+              ```
+              const reactDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
+              ```
+              This is boilerplate code for initialising the devToolsExtension if you have them installed in your browser (recommended)
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ```
+              const configureStore = (preloadedState) => { ... }
+              export default configureStore
+              ```
+              We are returning the store to whatever initialises it, and giving that entity the option to set a pre loaded state.  
+              <br />
+              ```
+              const middlewares = [thunk, githubApi, logger]
+              ```
+              Here we are arranging the middlewares in order of execution. 
+              Every middleware **SHOULD**™ call the next() method, triggering the next middleware until there are no more middleware left, 
+              then the intercepted action goes on to the reducers. You'll see this when we create our github api middleware.  
+              We have NOT actually setup the middlewares yet.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ```
+              const middlewareEnhancer = applyMiddleware(...middlewares)
+              ```
+              Here we actually apply the middleware to the store.  
+              Note we are using the spread operator when passing in the middleware array. This is equivalent to
+              ```
+              applyMiddleware(thunk, githubApi, logger) // Array has been spread upon function invokation
+              ```
+              Touching upon the ordering point again, the above results in effectively
+              ```
+              thunk(githubApi(logger(store.dispatch)))(action) // middlewares are being composed together
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ```
+              const enhancers = compose(middlewareEnhancer, reactDevTools)
+              ```
+              We are [composing](https://en.wikipedia.org/wiki/Function_composition_(computer_science)) our middlewares with the initialiser function for React Dev Tools.  
+              <br />
+              Then finally, we assemble and return the redux store.
+              ```
+              return createStore(rootReducer, preloadedState, enhancers)
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              In our *main.js* file, we need to import our configureStore function and other redux related libraries
+              ```
+              import { Provider } from 'react-redux'
+              import configureStore from './redux/configureStore'
+              ```
+              Anywhere before the definition of the render() function and after the imports, add the following code
+              ```
+              const initialState = {}
+              const store = configureStore(initialState)
+              ```
+              Then wrap the `<Router>` element with the `<Privider>` element. We also need to pass the store into the provider.
+              ```
+              <AppContainer>
+                <Provider store={store}>
+                  <Router>
+                    ...
+                  </Router>
+                </Provider>
+              </AppContainer>
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Before we can build, we need to create our root reducer and github middleware.  
+              ==>
+            </script>
+          </section>
+        </section>
+        <section> <!-- Slide 13: reducers, actions -->
+          <section data-markdown>
+            <script type="text/template">
+              # Actions and Reducers
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Actions
+              Through actions, we define the states in which our application can be in. For our example 
+              of fetching GitHub repositories, we can...  
+              * Start a fetch
+              * Receive fetched repositories
+                * Handle failure
+                * Display if successful
+              Which we'll represent with action types.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Create a directory in *src* called *github*. This is our first domain in our DDD approach.  
+              Then create a file in the *github* directory called *github.actionTypes.js*
+              ```
+              src/github/github.actionTypes.js
+              ```
+              Within this file, lets define our 3 main states/actions
+              ```
+              export const FETCH_REPOSITORIES_START = 'FETCH_REPOSITORIES_START'
+              export const FETCH_REPOSITORIES_FAILED = 'FETCH_REPOSITORIES_FAILED'
+              export const FETCH_REPOSITORIES_SUCCESS = 'FETCH_REPOSITORIES_SUCCESS'
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Next let's setup our actions. Create:
+              ```
+              src/github/github.action.js
+              ```
+              then import our actionTypes into it.  
+              We are going to be following the action creator pattern, where we export a function which returns an action.
+              ````
+              import * as types from './github.actionTypes'
+
+              export const setRepositories = repositories => {
+                return {
+                  type: types.FETCH_REPOSITORIES_SUCCESS,
+                  repositories
+                }
+              }
+              export const fetchRepositoriesFailed = error => {
+                return {
+                  type: types.FETCH_REPOSITORIES_FAILED,
+                  error
+                }
+              }
+              export const loadReposForUser = username => {
+                // validate username?
+                return {
+                  type: types.FETCH_REPOSITORIES_START,
+                  username
+                }
+              }
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Now that the actions are setup, let's move onto the reducer.  
+              Create:
+              ```
+              src/github/github.reducer.js
+              ```
+              Import our actionTypes and setup our reducer method with a switch on the received action.
+              ```
+              import * as types from './github.actionTypes'
+
+              const github = (state = [], action) => {
+                switch (action.type) {
+                  case types.FETCH_REPOSITORIES_SUCCESS:
+                  case types.FETCH_REPOSITORIES_START:
+                  case types.FETCH_REPOSITORIES_FAILED:
+                  default:
+                    return state
+                }
+              }
+              export default github
+              ```
+            </script>
+          </section>
+        </section>
 			</div>
     </div>
     <script src="lib/js/head.min.js"></script>

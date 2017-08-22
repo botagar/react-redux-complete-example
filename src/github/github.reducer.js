@@ -3,7 +3,7 @@ import update from 'react-addons-update'
 
 const github = (state = [], action) => {
   switch (action.type) {
-    case types.SET_REPOSITORIES:
+    case types.FETCH_REPOSITORIES_SUCCESS:
       return update(state, {
         repositories: {$set: action.repositories},
         loading: {$set: false}
