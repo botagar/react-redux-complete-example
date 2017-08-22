@@ -976,7 +976,7 @@
           <section data-markdown>
             <script type="text/template">
               Now that the actions are setup, let's move onto the reducer.  
-              Create:
+              Create a new file:
               ```
               src/github/github.reducer.js
               ```
@@ -986,8 +986,8 @@
 
               const github = (state = [], action) => {
                 switch (action.type) {
-                  case types.FETCH_REPOSITORIES_SUCCESS:
                   case types.FETCH_REPOSITORIES_START:
+                  case types.FETCH_REPOSITORIES_SUCCESS:
                   case types.FETCH_REPOSITORIES_FAILED:
                   default:
                     return state
@@ -995,6 +995,62 @@
               }
               export default github
               ```
+              We'll come back to this again in a bit.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              Onto the root reducer!  
+              If you remember back a few slides, we were importing a rootReducer into our configureStore file. It's now time to create that reducer!  
+              <br />
+              Create a new file:
+              ```
+              src/redux/rootReducer.js
+              ```
+              This file is fairly simple, but there are some caveats to keep in mind.  
+              ```
+              import { combineReducers } from 'redux'
+              import Github from '../github/github.reducer'
+
+              export default combineReducers({
+                Github
+              })
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              The role of the combineReducers() method is to allow us to define many reducers and not worry about dealing with the fact that the store only accepts 1.  
+              Having said that, it's important to know how the reducer maps to the state object.  
+              In the case of:
+              ```
+              combineReducers({ExampleReducer1, ExampleReducer2})
+              ```
+              Our store object will take on the shape of:
+              ```
+              {
+                ExampleReducer1: { ... },
+                ExampleReducer2: { ... }
+              }
+              ```
+              Remebering back to our reducer, it takes in an action and a state. 
+              The state object being passed in is the object in the store whose reducer maps to the key in the store object.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              A 2nd example:
+              ```
+              combineReducers({ExampleReducer1, reducer2: ExampleReducer2})
+              ```
+              Would result in a store looking like:
+              ```
+              {
+                ExampleReducer1: { ... },
+                reducer2: { ... }
+              }
+              ```
+              This matters when fetching information from the store from within a component.
             </script>
           </section>
         </section>

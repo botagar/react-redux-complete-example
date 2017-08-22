@@ -5,8 +5,7 @@ engines:
       enabled: true
       config:
         languages:
-        - ruby:
-        - javascript:
+        - javascript: true
 
 ratings:
   paths:
