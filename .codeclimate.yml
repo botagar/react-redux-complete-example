@@ -1,8 +1,16 @@
-JavaScript: true
+engines:
+  eslint:
+    enabled: true
+  duplication:
+      enabled: true
+      config:
+        languages:
+        - ruby:
+        - javascript:
 
 ratings:
   paths:
   - src/**
-  
+
 exclude_paths:
 - docs/**
