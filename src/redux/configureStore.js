@@ -6,13 +6,11 @@ import rootReducer from './rootReducer.js'
 
 // For more logging options: https://github.com/evgenyrodionov/redux-logger
 
-const reactDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
-
-const configureStore = (preloadedState) => {
+const configureStore = (preloadedState, reactDevTools) => {
   const middlewares = [githubApi, logger]
   const middlewareEnhancer = applyMiddleware(...middlewares)
-  const enhancers = compose(middlewareEnhancer, reactDevTools)
-
+  const enhancers = compose(middlewareEnhancer, reactDevTools ? reactDevTools : f => f)
+  
   return createStore(rootReducer, preloadedState, enhancers)
 }
 

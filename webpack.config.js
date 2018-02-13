@@ -4,7 +4,7 @@ var path = require('path')
 var SRC = path.resolve(__dirname, 'src')
 var DIST = path.resolve(__dirname, 'dist')
 
-var config = {
+var reactConfig = {
   entry: [
     'react-hot-loader/patch',
     './src/main.js'
@@ -45,4 +45,35 @@ var config = {
   ]
 }
 
-module.exports = config
+var bffConfig = {
+  target: 'node',
+
+  entry: [
+    './src/server.js'
+  ],
+
+  output: {
+    path: DIST,
+    filename: 'server.bundle.js'
+  },
+
+  module: {
+    loaders: [
+      {
+        test: /\.html$/,
+        loader: 'file-loader?name=[name].[ext]'
+      },
+      {
+        test: /\.css$/,
+        loader: 'file-loader?name=[name].[ext]'
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
+    ]
+  }
+}
+
+module.exports = [reactConfig, bffConfig]

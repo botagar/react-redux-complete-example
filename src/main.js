@@ -1,40 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { AppContainer } from 'react-hot-loader'
-import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
 
-import NavBar from './common/navbar.component.jsx'
+import App from './App.jsx'
 
 import initialState from './common/initialState'
 import configureStore from './redux/configureStore'
-import RoutesConfig from './common/routes.config.js'
-import NavConfig from './common/navLinks.config.js'
 
 import './index.html'
 import './reset.css'
 
-const store = configureStore(initialState)
-
-const appContainer = document.getElementById('app')
-
 const render = () => {
+  const reactDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
+  const appContainer = document.getElementById('app')
+  const store = configureStore(initialState, reactDevTools)
+
   ReactDOM.render(
     <AppContainer>
-        <Provider store={store}>
-          <Router>
-            <div>
-              <NavBar navLinks={NavConfig} />
-
-              <Switch>
-                {RoutesConfig.map((route,index) => (
-                  <Route key={index} path={route.path} component={route.component} exact={route.exact} />
-                ))}
-                {/* <Route component={NoMatch}/> some 404 page */}
-              </Switch>
-            </div>
-          </Router>
-        </Provider>
+      <App store={store} Router={BrowserRouter} />
     </AppContainer>,
     appContainer
   )

@@ -8,6 +8,7 @@
     "coverage": "nyc report --reporter=text-lcov  | coveralls",
     "build": "webpack",
     "serve": "webpack-dev-server",
+    "serve-bff": "node ./dist/server.bundle.js",
     "lint": "standard src/**/**",
     "lint-fix": "standard —-fix src/**/**",
     "cleanup": "rm -rf ./dist ./coverage ./.nyc_output ./node_modules"
@@ -30,7 +31,10 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "express": "^4.16.2",
+    "fs": "^0.0.1-security",
     "jsdom": "^11.1.0",
+    "path": "^0.12.7",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-addons-update": "^15.6.0",
