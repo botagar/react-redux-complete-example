@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM, { hydrate } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router-dom'
 
@@ -11,17 +11,28 @@ import configureStore from './redux/configureStore'
 import './index.html'
 import './reset.css'
 
+const preloadedState = window.__PRELOADED_STATE__
+delete window.__PRELOADED_STATE__
+
 const render = () => {
+  console.log("PLS: " + preloadedState)
   const reactDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
   const appContainer = document.getElementById('app')
-  const store = configureStore(initialState, reactDevTools)
+  const store = configureStore(preloadedState ? preloadedState : initialState, reactDevTools)
 
-  ReactDOM.render(
-    <AppContainer>
-      <App store={store} Router={BrowserRouter} />
-    </AppContainer>,
-    appContainer
-  )
+  preloadedState ? 
+    hydrate(
+      <AppContainer>
+        <App store={store} Router={BrowserRouter} />
+      </AppContainer>,
+      appContainer)
+    :
+    ReactDOM.render(
+      <AppContainer>
+        <App store={store} Router={BrowserRouter} />
+      </AppContainer>,
+      appContainer
+    )
 }
 
 if (module.hot) {

@@ -48,6 +48,10 @@ var reactConfig = {
 var bffConfig = {
   target: 'node',
 
+  node: {
+    __dirname: false,
+  },
+
   entry: [
     './src/server.js'
   ],
