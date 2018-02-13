@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
 import { logger } from 'redux-logger'
 
 import githubApi from '../github/github.api.middleware.js'
@@ -10,7 +9,7 @@ import rootReducer from './rootReducer.js'
 const reactDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
 
 const configureStore = (preloadedState) => {
-  const middlewares = [thunk, githubApi, logger]
+  const middlewares = [githubApi, logger]
   const middlewareEnhancer = applyMiddleware(...middlewares)
   const enhancers = compose(middlewareEnhancer, reactDevTools)
 
