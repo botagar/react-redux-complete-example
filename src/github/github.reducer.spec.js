@@ -27,7 +27,7 @@ describe('Github.Reducer', function () {
 
     deepFreeze(initialState)
 
-    let newState = github(initialState, { type: types.SET_REPOSITORIES, repositories: newRepositories })
+    let newState = github(initialState, { type: types.FETCH_REPOSITORIES_SUCCESS, repositories: newRepositories })
 
     expect(newState.repositories.length).to.eql(3)
     expect(newState.repositories).to.eql(newRepositories)
