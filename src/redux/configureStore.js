@@ -9,8 +9,8 @@ import rootReducer from './rootReducer.js'
 const configureStore = (preloadedState, reactDevTools) => {
   const middlewares = [githubApi, logger]
   const middlewareEnhancer = applyMiddleware(...middlewares)
-  const enhancers = compose(middlewareEnhancer, reactDevTools ? reactDevTools : f => f)
-  
+  const enhancers = compose(middlewareEnhancer, reactDevTools || (f => f))
+
   return createStore(rootReducer, preloadedState, enhancers)
 }
 

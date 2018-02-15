@@ -1,12 +1,12 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from 'enzyme-adapter-react-16'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
 
 import NavbarLink from './navbarLink.component.jsx'
 
-Enzyme.configure({ adapter: new Adapter() });
+Enzyme.configure({ adapter: new Adapter() })
 
 const wrapper = shallow(<NavbarLink uri='' altText='test' />)
 
