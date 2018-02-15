@@ -23,28 +23,33 @@ app.use(handleRender)
 // We are going to fill these out in the sections to follow
 async function handleRender(req, res) {
     const store = configureStore(emptyState)
+    let context = {}
     console.info('Store Initialised')
 
-    const html = renderToString(
-        <App store={ store } Router={ StaticRouter } />
+    const appHtml = renderToString(
+        <Provider store={store}>
+          <StaticRouter context={context} >
+            <App />
+          </StaticRouter>
+        </Provider>
     );
 
     const preloadedState = store.getState()
 
     res.set('cache-control', 'no-cache')
-    res.send(await renderFullPage(html, preloadedState))
+    res.send(await renderFullPage(appHtml, preloadedState))
 }
 
-async function renderFullPage(html, preloadedState) {
+async function renderFullPage(reactAppHtml, preloadedState) {
     let initialHtml = await fs.readFile(__dirname + '/index.html', 'utf8')
     const $ = cheerio.load(initialHtml)
 
     let preloadedStateHtml = `
-        <script type="text/js">
+        <script>
             window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
         </script>
     `
-
+    $('#app').append(reactAppHtml)
     $('#app').after(preloadedStateHtml)
     return $.html()
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM, { hydrate } from 'react-dom'
+import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router-dom'
 
@@ -20,19 +21,27 @@ const render = () => {
   const appContainer = document.getElementById('app')
   const store = configureStore(preloadedState ? preloadedState : initialState, reactDevTools)
 
-  preloadedState ? 
+  // preloadedState ? 
     hydrate(
       <AppContainer>
-        <App store={store} Router={BrowserRouter} />
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
       </AppContainer>,
       appContainer)
-    :
-    ReactDOM.render(
-      <AppContainer>
-        <App store={store} Router={BrowserRouter} />
-      </AppContainer>,
-      appContainer
-    )
+    // :
+    // ReactDOM.render(
+    //   <AppContainer>
+    //     <Provider store={store}>
+    //       <BrowserRouter>
+    //         <App />
+    //       </BrowserRouter>
+    //     </Provider>
+    //   </AppContainer>,
+    //   appContainer
+    // )
 }
 
 if (module.hot) {
