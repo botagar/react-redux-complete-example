@@ -21,27 +21,16 @@ const render = () => {
   const appContainer = document.getElementById('app')
   const store = configureStore(preloadedState ? preloadedState : initialState, reactDevTools)
 
-  // preloadedState ? 
-    hydrate(
-      <AppContainer>
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>
-      </AppContainer>,
-      appContainer)
-    // :
-    // ReactDOM.render(
-    //   <AppContainer>
-    //     <Provider store={store}>
-    //       <BrowserRouter>
-    //         <App />
-    //       </BrowserRouter>
-    //     </Provider>
-    //   </AppContainer>,
-    //   appContainer
-    // )
+  hydrate(
+    <AppContainer>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </AppContainer>,
+    appContainer
+  )
 }
 
 if (module.hot) {

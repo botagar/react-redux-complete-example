@@ -15,7 +15,7 @@ const app = Express()
 const port = 3000
 
 //Serve static files
-app.use('/static', Express.static('static'))
+app.use('/dist', Express.static('dist'))
 
 // This is fired every time the server side receives a request
 app.use(handleRender)
@@ -28,7 +28,7 @@ async function handleRender(req, res) {
 
     const appHtml = renderToString(
         <Provider store={store}>
-          <StaticRouter context={context} >
+          <StaticRouter context={context} location={req.url}  >
             <App />
           </StaticRouter>
         </Provider>
