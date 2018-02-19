@@ -3,10 +3,10 @@ jobs:
   build:
     docker:
       - image: circleci/node:8.9-stretch-browsers
+        environment:
+          PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
       - image: circleci/python:3.7-rc-stretch-browsers
       - image: yarnpkg/dev:latest
-    environment:
-      PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
     steps:
       - checkout
       - run: yarn build
