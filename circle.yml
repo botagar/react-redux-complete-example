@@ -5,6 +5,8 @@ jobs:
       - image: circleci/node:8.9-stretch-browsers
       - image: circleci/python:3.7-rc-stretch-browsers
       - image: yarnpkg/dev:latest
+    environment:
+      PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
     steps:
       - checkout
       - run: yarn build
@@ -39,6 +41,7 @@ workflows:
       - deploy:
           requires:
             - build
+            - test
 
 
 
