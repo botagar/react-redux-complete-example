@@ -6,7 +6,7 @@ jobs:
         # environment:
         #   PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
       - image: circleci/python:3.7-rc-stretch-browsers
-      - image: yarnpkg/dev:latest
+      # - image: yarnpkg/dev:latest
     steps:
       - checkout
       - run: npm install yarn
