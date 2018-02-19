@@ -10,6 +10,7 @@ jobs:
     steps:
       - checkout
       - run: npm install yarn
+      - run: yarn install
       - run: yarn build
     persist_to_workspace:
       root: /tmp/artifacts
@@ -23,6 +24,7 @@ jobs:
     steps:
       - checkout
       - run: npm install yarn
+      - run: yarn install
       - run: yarn test
   deploy:
     docker:
@@ -33,6 +35,7 @@ jobs:
       at: /tmp/artifacts
     steps:
       - run: npm install yarn
+      - run: yarn install
       - run: yarn deploy
 
 workflows:
