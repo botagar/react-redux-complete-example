@@ -1,6 +1,5 @@
 version: 2
 jobs:
-  tooling:
   build:
     docker:
       - image: circleci/node:8.9-stretch-browsers
