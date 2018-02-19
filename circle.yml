@@ -15,6 +15,10 @@ dependencies:
     - pip install boto
     - pip install ansible
 
+build:
+  override:
+    - yarn build
+
 test:
   override:
     - yarn lint
