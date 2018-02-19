@@ -11,7 +11,8 @@
     "serve-bff": "node ./dist/server.bundle.js",
     "lint": "standard src/**/**",
     "lint-fix": "standard —-fix src/**/**",
-    "cleanup": "rm -rf ./dist ./coverage ./.nyc_output ./node_modules"
+    "cleanup": "rm -rf ./dist ./coverage ./.nyc_output ./node_modules; unset AWS_ACCESS_KEY_ID; unset AWS_SECRET_ACCESS_KEY;",
+    "deploy": "serverless client deploy"
   },
   "repository": {
     "type": "git",

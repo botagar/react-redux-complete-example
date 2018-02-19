@@ -17,4 +17,11 @@ dependencies:
 
 test:
   override:
+    - yarn lint
     - yarn test
+
+deployment:
+  dev:
+    branch: master
+    commands:
+      - yarn deploy
