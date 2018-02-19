@@ -1,6 +1,6 @@
 machine:
-  python:
-    version: 2.7.10
+  # python:
+  #   version: 2.7.10
   node:
     version: 8.9.4
   environment:
@@ -11,16 +11,13 @@ dependencies:
     - yarn
   cache_directories:
     - ~/.cache/yarn
-  pre:
-    - pip install boto
-    - pip install ansible
-
-build:
-  override:
-    - yarn build
+  # pre:
+  #   - pip install boto
+  #   - pip install ansible
 
 test:
   override:
+    - yarn build
     - yarn lint
     - yarn test
 
