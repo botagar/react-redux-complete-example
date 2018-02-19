@@ -16,7 +16,6 @@ const preloadedState = window.__PRELOADED_STATE__
 delete window.__PRELOADED_STATE__
 
 const render = () => {
-  console.log("PLS: " + preloadedState)
   const reactDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
   const appContainer = document.getElementById('app')
   const store = configureStore(preloadedState ? preloadedState : initialState, reactDevTools)

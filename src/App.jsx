@@ -10,6 +10,7 @@ import About from './about/about.component.jsx'
 const App = () =>
   <Switch>
     <Route key={'home'} path={'/'} component={Home} exact={true} />
+    <Route key={'index'} path={'/index.html'} component={Home} exact={true} />
     <Route key={'about'} path={'/about'} component={About} exact={true} />
     <Route key={'market'} path={'/market'} component={null} exact={true} />
 
