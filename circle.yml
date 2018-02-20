@@ -1,3 +1,5 @@
+# https://circleci.com/docs/2.0/workflows/
+
 version: 2
 jobs:
   build:
@@ -6,12 +8,11 @@ jobs:
       - image: circleci/python:3.7-rc-stretch-browsers
     steps:
       - checkout
-      # - run: npm install yarn
       - run: lsb_release -a
       - run: yarn install
       - run: yarn build
     persist_to_workspace:
-      root: dist
+      root: .
       paths:
         - dist
 
@@ -21,7 +22,6 @@ jobs:
       - image: circleci/python:3.7-rc-stretch-browsers
     steps:
       - checkout
-      # - run: npm install yarn
       - run: yarn install
       - run: yarn test
 
@@ -31,7 +31,6 @@ jobs:
       - image: circleci/python:3.7-rc-stretch-browsers
     steps:
       - checkout
-      # - run: npm install yarn
       - run: yarn install
       - run: yarn coverage
 
@@ -43,7 +42,6 @@ jobs:
       at: dist
     steps:
       - checkout
-      # - run: npm install yarn
       - run: yarn install
       - run: yarn deploy
 
@@ -58,6 +56,7 @@ workflows:
           requires:
             - build
             - test
+            - coverage
 
 
 
