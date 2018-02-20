@@ -39,9 +39,9 @@ jobs:
       - image: circleci/node:8.9-stretch-browsers
       - image: circleci/python:3.7-rc-stretch-browsers
     steps:
+      - checkout
       - attach_workspace:
           at: ~/project
-      - checkout
       - run: yarn install
       - run: yarn deploy
 
