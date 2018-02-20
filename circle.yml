@@ -11,6 +11,8 @@ jobs:
       - run: lsb_release -a
       - run: yarn install
       - run: yarn build
+    attach_workspace:
+      at: ~/project
     persist_to_workspace:
       root: ~/project
       paths:
