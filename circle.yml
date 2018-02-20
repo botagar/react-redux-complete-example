@@ -24,14 +24,6 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn test
-
-  coverage:
-    docker:
-      - image: circleci/node:8.9-stretch-browsers
-      - image: circleci/python:3.7-rc-stretch-browsers
-    steps:
-      - checkout
-      - run: yarn install
       - run: yarn coverage
 
   deploy:
@@ -51,12 +43,10 @@ workflows:
     jobs:
       - build
       - test
-      - coverage
       - deploy:
           requires:
             - build
             - test
-            # - coverage
 
 
 
