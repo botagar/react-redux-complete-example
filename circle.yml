@@ -36,6 +36,8 @@ jobs:
           at: ~/project
       - run: yarn install
       - run: yarn deploy
+      - store_artifacts:
+          path: dist
 
 workflows:
   version: 2
