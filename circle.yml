@@ -11,12 +11,10 @@ jobs:
       - run: lsb_release -a
       - run: yarn install
       - run: yarn build
-    attach_workspace:
-      at: ~/project
-    persist_to_workspace:
-      root: ~/project
-      paths:
-        - dist
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - dist
 
   test:
     docker:
@@ -40,9 +38,9 @@ jobs:
     docker:
       - image: circleci/node:8.9-stretch-browsers
       - image: circleci/python:3.7-rc-stretch-browsers
-    attach_workspace:
-      at: ~/project
     steps:
+      - attach_workspace:
+          at: ~/project
       - checkout
       - run: yarn install
       - run: yarn deploy
