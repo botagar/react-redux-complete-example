@@ -1,9 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import NavBar from './common/navbar.component.jsx'
-import NavConfig from './common/navLinks.config.js'
-
 import Home from './home/home.component.jsx'
 import About from './about/about.component.jsx'
 

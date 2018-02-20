@@ -18,7 +18,7 @@ delete window.__PRELOADED_STATE__
 const render = () => {
   const reactDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
   const appContainer = document.getElementById('app')
-  const store = configureStore(preloadedState ? preloadedState : initialState, reactDevTools)
+  const store = configureStore(preloadedState || initialState, reactDevTools)
 
   hydrate(
     <AppContainer>
@@ -33,9 +33,9 @@ const render = () => {
 }
 
 if (module.hot) {
-    module.hot.accept('./home/home.component.jsx', () => {
-        render()
-    })
+  module.hot.accept('./home/home.component.jsx', () => {
+    render()
+  })
 }
 
 render()
