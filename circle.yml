@@ -3,39 +3,47 @@ jobs:
   build:
     docker:
       - image: circleci/node:8.9-stretch-browsers
-        # environment:
-        #   PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
       - image: circleci/python:3.7-rc-stretch-browsers
-      # - image: yarnpkg/dev:latest
     steps:
       - checkout
-      - run: npm install yarn
+      # - run: npm install yarn
+      - run: lsb_release -a
       - run: yarn install
       - run: yarn build
     persist_to_workspace:
-      root: /tmp/artifacts
+      root: dist
       paths:
         - dist
+
   test:
     docker:
       - image: circleci/node:8.9-stretch-browsers
       - image: circleci/python:3.7-rc-stretch-browsers
-      - image: yarnpkg/dev:latest
     steps:
       - checkout
-      - run: npm install yarn
+      # - run: npm install yarn
       - run: yarn install
       - run: yarn test
+
+  coverage:
+    docker:
+      - image: circleci/node:8.9-stretch-browsers
+      - image: circleci/python:3.7-rc-stretch-browsers
+    steps:
+      - checkout
+      # - run: npm install yarn
+      - run: yarn install
+      - run: yarn coverage
+
   deploy:
     docker:
       - image: circleci/node:8.9-stretch-browsers
       - image: circleci/python:3.7-rc-stretch-browsers
-      - image: yarnpkg/dev:latest
     attach_workspace:
-      at: /tmp/artifacts
+      at: dist
     steps:
       - checkout
-      - run: npm install yarn
+      # - run: npm install yarn
       - run: yarn install
       - run: yarn deploy
 
@@ -45,6 +53,7 @@ workflows:
     jobs:
       - build
       - test
+      - coverage
       - deploy:
           requires:
             - build
