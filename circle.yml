@@ -8,13 +8,13 @@ jobs:
       - image: circleci/python:3.7-rc-stretch-browsers
     steps:
       - checkout
-      - run: lsb_release -a
       - run: yarn install
       - run: yarn build
       - persist_to_workspace:
           root: ~/project
           paths:
             - dist
+            - node_modules
 
   test:
     docker:
@@ -47,37 +47,3 @@ workflows:
           requires:
             - build
             - test
-
-
-
-
-
-
-# machine:
-#   # python:
-#   #   version: 2.7.10
-#   node:
-#     version: 8.9.4
-#   environment:
-#     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
-
-# dependencies:
-#   override:
-#     - yarn
-#   cache_directories:
-#     - ~/.cache/yarn
-#   # pre:
-#   #   - pip install boto
-#   #   - pip install ansible
-
-# test:
-#   override:
-#     - yarn build
-#     - yarn lint
-#     - yarn test
-
-# deployment:
-#   dev:
-#     branch: master
-#     commands:
-#       - yarn deploy
