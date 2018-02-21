@@ -12,6 +12,6 @@ plugins:
 custom:
   client:
     bucketName: reactexample.dev.johngeddes.tech
-    distributionFolder: dist # (Optional) The location of your website. This defaults to client/dist
-    indexDocument: index.html # (Optional) The name of your index document inside your distributionFolder. Defaults to index.html
-    errorDocument: error.html # (Optional) The name of your error document inside your distributionFolder. Defaults to error.html
+    distributionFolder: dist
+    indexDocument: index.html
+    errorDocument: index.html
