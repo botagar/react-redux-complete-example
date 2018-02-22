@@ -8,14 +8,17 @@ jobs:
       - image: circleci/python:3.7-rc-stretch-browsers
     steps:
       - checkout
+      - restore_cache:
+          key: node_modules-{{ checksum "package.json" }}
       - run: yarn install
       - run: yarn build
       - run: yarn generate-sitemap
+      - save_cache: 
+          key: node_modules-{{ checksum "package.json" }}
       - persist_to_workspace:
           root: ~/project
           paths:
             - dist
-            - node_modules
       - store_artifacts:
           path: dist
 
@@ -25,6 +28,8 @@ jobs:
       - image: circleci/python:3.7-rc-stretch-browsers
     steps:
       - checkout
+      - restore_cache:
+          key: node_modules-{{ checksum "package.json" }}
       - run: yarn install
       - run: yarn test
       - run: yarn coverage
@@ -35,6 +40,8 @@ jobs:
       - image: circleci/python:3.7-rc-stretch-browsers
     steps:
       - checkout
+      - restore_cache:
+          key: node_modules-{{ checksum "package.json" }}
       - attach_workspace:
           at: ~/project
       - run: yarn install
