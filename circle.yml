@@ -15,6 +15,8 @@ jobs:
       - run: yarn generate-sitemap
       - save_cache: 
           key: node_modules-{{ checksum "package.json" }}
+          paths:
+            - node_modules
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -35,6 +37,8 @@ jobs:
       - run: yarn coverage
       - save_cache: 
           key: node_modules-{{ checksum "package.json" }}
+          paths:
+            - node_modules
 
   deploy:
     docker:
@@ -50,6 +54,8 @@ jobs:
       - run: yarn deploy
       - save_cache: 
           key: node_modules-{{ checksum "package.json" }}
+          paths:
+            - node_modules
       
 workflows:
   version: 2
