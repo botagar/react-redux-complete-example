@@ -10,6 +10,7 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn build
+      - run: yarn generate-sitemap
       - persist_to_workspace:
           root: ~/project
           paths:

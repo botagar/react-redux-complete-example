@@ -1,8 +1,9 @@
-var webpack = require('webpack')
-var path = require('path')
+const webpack = require('webpack')
+const path = require('path')
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
-var SRC = path.resolve(__dirname, 'src')
-var DIST = path.resolve(__dirname, 'dist')
+const SRC = path.resolve(__dirname, 'src')
+const DIST = path.resolve(__dirname, 'dist')
 
 var reactConfig = {
   entry: [
@@ -41,7 +42,11 @@ var reactConfig = {
   },
 
   plugins: [
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
+    new WebpackShellPlugin({
+      onBuildStart: ['echo reactConfig Starting'],
+      onBuildEnd: ['echo reactConfig Ending']
+    })
   ]
 }
 
