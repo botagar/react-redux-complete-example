@@ -19,4 +19,4 @@ _.map(reactRouteElements, routeElement => {
 
 let xml = sitemapXmlRoot.end({ pretty: true })
 
-fs.writeFileSync('sitemap.xml', xml)
+fs.writeFileSync('dist/sitemap.xml', xml)
