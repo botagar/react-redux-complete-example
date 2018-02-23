@@ -10,8 +10,13 @@ const navLinkConfig = [
     image: 'http://stickerslug.s3.amazonaws.com/product-image/z-bu-0413-yellow-alt00.jpg'
   },
   {
-    name: 'Market',
-    URI: '/market',
+    name: 'Blog',
+    URI: '/blog',
+    image: 'https://image.flaticon.com/icons/png/512/14/14449.png'
+  },
+  {
+    name: 'Contact',
+    URI: '/contact',
     image: 'https://image.flaticon.com/icons/png/512/14/14449.png'
   }
 ]

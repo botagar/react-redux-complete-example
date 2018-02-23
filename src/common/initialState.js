@@ -3,6 +3,11 @@ const InitialState = {
     loading: false,
     error: false,
     repositories: []
+  },
+  Blog: {
+    loading: false,
+    error: false,
+    posts: []
   }
 }
 
