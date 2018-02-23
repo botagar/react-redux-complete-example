@@ -26,7 +26,6 @@ class BlogPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     this.setState((prevState, props) => {
       return {
         loading: props.loading,
@@ -43,9 +42,9 @@ class BlogPage extends React.Component {
         <p>Bloggo</p>
         { this.state.loading ? <p>Loading</p> : ''}
         { this.state.error ? <p>Error</p> : ''}
-        {_.map(this.state.posts, post => {
+        { _.map(this.state.posts, post => {
           return <p key={post.id}>{post.title}</p>
-        })}
+        }) }
       </div>
     )
   }
