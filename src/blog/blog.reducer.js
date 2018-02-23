@@ -10,8 +10,8 @@ const blog = (state = [], action) => {
         error: {$set: false}
       })
     case types.FETCH_BLOGS_SUCCESS:
-      console.log(action)
       return update(state, {
+        posts: {$set: action.posts},
         loading: {$set: false}
       })
     case types.FETCH_BLOGS_FAILED:

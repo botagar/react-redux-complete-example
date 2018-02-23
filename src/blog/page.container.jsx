@@ -1,5 +1,9 @@
+import _ from 'underscore'
 import React from 'react'
 import { connect } from 'react-redux'
+
+import NavBar from '../common/navbar.component.jsx'
+import NavConfig from '../common/navLinks.config.js'
 import { fetchBlogPosts } from './blog.action'
 
 class BlogPage extends React.Component {
@@ -8,7 +12,9 @@ class BlogPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true
+      loading: true,
+      error: false,
+      posts: []
     }
     this.events = {
       requestLatestPosts: props.requestLatestPosts
@@ -20,11 +26,28 @@ class BlogPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
+    console.log(nextProps)
+    this.setState((prevState, props) => {
+      return {
+        loading: props.loading,
+        error: props.error,
+        posts: props.posts
+      }
+    })
   }
 
   render() {
-    return null
+    return (
+      <div>
+        <NavBar navLinks={NavConfig} />
+        <p>Bloggo</p>
+        { this.state.loading ? <p>Loading</p> : ''}
+        { this.state.error ? <p>Error</p> : ''}
+        {_.map(this.state.posts, post => {
+          return <p key={post.id}>{post.title}</p>
+        })}
+      </div>
+    )
   }
 }
 
